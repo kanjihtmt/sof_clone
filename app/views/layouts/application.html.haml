@@ -1,10 +1,18 @@
 !!!
-%html
+%html{lang: 'ja'}
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title SofClone
+    %meta{charset: 'utf-8'}
+    %meta{'http-equiv': "X-UA-Compatible", content: 'IE=edge'}
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
+    %title Stack Overflow Clone
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = yield
+    = render 'navbar'
+
+    .container
+      .wrapper
+        = render 'header'
+
+        = yield
