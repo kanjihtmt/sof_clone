@@ -15,16 +15,25 @@
 @import "bootstrap"
 @import "font-awesome"
 
-.navbar
-  min-height: 34px
-
 .wrapper
-  padding: 40px 0
+  padding: 48px 0
+
+.navbar-right
+  ul.dropdown-menu
+    li
+      a
+        p
+          margin: 0
+          padding: 0
+        p.title
+          color: #07c
+        p.description
+          color: #3d3d3d
 
 #header
   margin: 0 auto
   height: 96px
-  padding: 0 15px
+  padding: 0
   box-sizing: content-box
   position: relative
   #logo
@@ -51,9 +60,13 @@
       ul
         margin: 0
         padding: 0
+        li.active
+          color: #fff
+          background: #f90
+          text-decoration: none
         li
           display: inline-block
-          margin: 0 0 0 0
+          margin: 0
           padding: 0
           a
             padding: 4px 10px 5px
@@ -62,9 +75,11 @@
             color: #fff
             background: #858d93
             -webkit-transition: background, 0.15s, ease
+          a:hover
+            color: #fff
+            background: #f90
+            text-decoration: none
     .mainnavs
-      display: inline-block
-    .askquestion
       display: inline-block
 
 

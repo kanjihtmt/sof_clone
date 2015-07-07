@@ -6,4 +6,33 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
+    #navbar.navbar-collapse.collapse
+      %form.navbar-form.navbar-right
+        %input.form-control{type: 'text', placeholder: '検索'}
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          %a{href: '#'} 登録
+        %li
+          %a{href: '#'} ログイン
+        %li
+          %a{href: 'http://ja.stackoverflow.com/tour'} ツアー
+        %li
+          %a.dropdown-toggle{href: '#', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': true, 'aria-expanded': false}
+            ヘルプ
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: 'http://ja.stackoverflow.com/tour'}
+                %p.title ツアー
+                %p.description はやわかりツアーはこちらから
+            %li
+              %a{href: 'http://ja.stackoverflow.com/help'}
+                %p.title ヘルプセンター
+                %p.description どんな質問でもお答えします
+            %li
+              %a{href: 'http://meta.ja.stackoverflow.com'}
+                %p.title メタ
+                %p.description コミュニティの運営について
+
+
 
