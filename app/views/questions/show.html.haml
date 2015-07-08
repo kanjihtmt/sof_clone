@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @question.title
+%p
+  %b Body:
+  = @question.body
+%p
+  %b Best answer:
+  = @question.best_answer_id
+%p
+  %b User:
+  = @question.user
+
+= link_to 'Edit', edit_question_path(@question)
+\|
+= link_to 'Back', questions_path
