@@ -39,13 +39,12 @@
 
 #header
   margin: 0 auto
+  margin-top: 20px
   height: 96px
   padding: 0
   box-sizing: content-box
-  position: relative
+
   #logo
-    display: inline-block
-    float: left
     a
       text-indent: -999em
       display: block
@@ -54,20 +53,13 @@
       background-image: url("logo.png")
       background-position: top left
       background-repeat: no-repeat
-      position: relative
-      top: 15px
+
   #menus
-    top: 42px
-    right: 5px
-    position: absolute
     .nav
-      margin-bottom: 0
-      padding-left: 0
-      list-style: none
+      padding: 12px 0 5px 0
       ul
         @include margin_padding_zero
         li
-          @include margin_padding_zero
           display: inline-block
           &.active
             a
@@ -81,8 +73,6 @@
             -webkit-transition: background, 0.15s, ease
             &:hover
               @include active_menu_item
-    .mainnavs
-      display: inline-block
 
 #footer
   margin-top: 70px
@@ -109,14 +99,15 @@
 
 /* layout */
 
-#mainbar
-  float: left
-  width: 720px
-  @include margin_padding_zero
+//#mainbar
+//  float: left
+//  width: 720px
+//  @include margin_padding_zero
 #sidebar
-  float: right
-  over-flow: hidden
-  width: 200px
-  margin: 0 0 15px 0
+  @include margin_padding_zero
+//  float: right
+//  over-flow: hidden
+//  width: 200px
+//  margin: 0 0 15px 0
 
 
