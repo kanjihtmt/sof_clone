@@ -14,6 +14,7 @@
 @import "bootstrap-sprockets"
 @import "bootstrap"
 @import "font-awesome"
+@import "questions"
 
 @mixin active_menu_item
   color: #fff
@@ -82,5 +83,40 @@
               @include active_menu_item
     .mainnavs
       display: inline-block
+
+#footer
+  margin-top: 70px
+  background: #2f2f2f
+  .footerwrap
+    width: 940px
+    padding: 15px
+    margin: 0 auto
+    text-align: left
+    box-sizing: content-box
+    #footer-menu
+      margin-bottom: 1.5em
+      line-height: 1.7em
+      a
+        margin: 0 .8em 0 0
+        color: #a2dcf4
+    #copyright
+      clear: both
+      padding-top: 10px
+      font-size: 11px
+      font-weight: 400
+      text-align: center
+      color: #777
+
+/* layout */
+
+#mainbar
+  float: left
+  width: 720px
+  @include margin_padding_zero
+#sidebar
+  float: right
+  over-flow: hidden
+  width: 200px
+  margin: 0 0 15px 0
 
 
