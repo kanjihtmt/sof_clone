@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
-  resources :questions
   root 'tops#index'
+  resources :questions
+  devise_for :users
+  resources :users
 end
