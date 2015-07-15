@@ -1,20 +1,16 @@
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+= render 'devise/shared/navtabs', active: :registration
+
+.row
+  .col-md-6
+    %h3 登録
+    .panel.panel-default
+      .panel-body
+        = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          = f.error_notification
+          .form-inputs
+            = f.input :email, required: true, autofocus: true
+            = f.input :password, required: true, hint: ("#{@minimum_password_length} 文字以上で入力してください。" if @minimum_password_length)
+            = f.input :password_confirmation, required: true
+          .form-actions
+            = f.button :submit, "登録", class: 'btn btn-primary'
+        = render "devise/shared/links"

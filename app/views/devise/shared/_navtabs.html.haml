@@ -1,0 +1,7 @@
+.row
+  .col-md-12
+    %ul.nav.nav-tabs{role: 'tablist'}
+      %li{class: active == :login ? 'active' : ''}
+        = link_to 'ログイン', new_session_path(resource_name)
+      %li{class: active == :registration ? 'active' : ''}
+        = link_to '登録', new_registration_path(resource_name)

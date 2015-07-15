@@ -11,9 +11,9 @@
         %input.form-control{type: 'text', placeholder: '検索'}
       %ul.nav.navbar-nav.navbar-right
         %li
-          %a{href: '#'} 登録
+          = link_to "登録", new_registration_path(resource_name)
         %li
-          %a{href: '#'} ログイン
+          = link_to "ログイン", new_session_path(resource_name)
         %li
           %a{href: 'http://ja.stackoverflow.com/tour'} ツアー
         %li
@@ -33,6 +33,3 @@
               %a{href: 'http://meta.ja.stackoverflow.com'}
                 %p.title メタ
                 %p.description コミュニティの運営について
-
-
-
