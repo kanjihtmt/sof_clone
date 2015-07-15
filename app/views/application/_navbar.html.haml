@@ -11,9 +11,12 @@
         %input.form-control{type: 'text', placeholder: '検索'}
       %ul.nav.navbar-nav.navbar-right
         %li
-          = link_to "登録", new_registration_path(resource_name)
+          = link_to "登録", new_registration_path('user')
         %li
-          = link_to "ログイン", new_session_path(resource_name)
+          - if user_signed_in?
+            = link_to 'ログアウト', destroy_user_session_path, method: :delete
+          - else
+            = link_to "ログイン", new_session_path('user')
         %li
           %a{href: 'http://ja.stackoverflow.com/tour'} ツアー
         %li
