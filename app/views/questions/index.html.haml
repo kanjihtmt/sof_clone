@@ -1,27 +1,45 @@
-%h1 Listing questions
+.row
+  #mainbar.col-md-10
+    %ul.nav.nav-tabs{role: 'tablist'}
+      %li{class: params[:tab].nil? || params[:tab] == 'active' ? 'active' : ''}
+        = link_to 'アクティブ', root_path(tab: 'active')
+      %li{class: params[:tab] == 'hot' ? 'active' : ''}
+        = link_to '人気', root_path(tab: 'hot')
+      %li{class: params[:tab] == 'week' ? 'active' : ''}
+        = link_to '今週', root_path(tab: 'week')
+      %li{class: params[:tab] == 'month' ? 'active' : ''}
+        = link_to '今月', root_path(tab: 'month')
 
-%table
-  %thead
-    %tr
-      %th Title
-      %th Body
-      %th Best answer
-      %th User
-      %th
-      %th
-      %th
+    .question-list
+      - @questions.each do |question|
+        .question-summary.narrow
+          .cp
+            .votes
+              .mini-counts
+                %span{title: "0 票"} 0
+              %div 票
+            .status{class: 'answered-accepted'}
+              .mini-counts
+                %span{title: "#{question.answers.size} 件の回答"} #{question.answers.size}
+              %div 回答
+            .views
+              .mini-counts
+                %span{title: "#{128} 件の閲覧数"} 128
+              %div 閲覧数
+          .summary
+            %h3
+              = link_to question.title, question_path(question), {class: 'question-hyperlink'}
+            .tags
+              %a{href: '#', class: 'post-tag', title: '', rel: 'tag'} Ruby
+            .started
+              %a{href:"#", class: 'started-link'}
+                更新日時
+                %span{title: question.updated_at, class:'relativetime'} 2 時間前
+                %a{href:'#'} #{question.questioner.try(:name)}
+                %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
-  %tbody
-    - @questions.each do |question|
-      %tr
-        %td= question.title
-        %td= question.body
-        %td= question.best_answer.try(:name)
-        %td= question.questioner.try(:name)
-        %td= link_to 'Show', question
-        %td= link_to 'Edit', edit_question_path(question)
-        %td= link_to 'Destroy', question, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Question', new_question_path
+  #sidebar.col-md-2
+    #recent-tags.module
+      %h4#h-recent-tags 最近のタグ
+      #recent-tags-list
+        %a.post-tag
