@@ -1,20 +1,18 @@
 #header
   .row
     #logo.col-md-6.col-sm-12
-      %a{href: '/'}
+      = link_to 'トップページ', root_path
     #menus.col-md-6.col-sm-12
       .nav
         %ul
-          %li
+          %li{class: controller_name == 'questions' ? 'active' : ''}
             = link_to '質問', questions_path
-          %li
+          %li{class: controller_name == 'tags' ? 'active' : ''}
             %a{href: '#'} タグ
-          %li
+          %li{class: controller_name == 'users' ? 'active' : ''}
             %a{href: '#'} ユーザ
           %li
-            %a{href: '#'} バッジ
-          %li
             %a{href: '#'} 未回答
-          %li
+          %li{class: controller_name == 'questions' && action_name == 'create' ? 'active' : ''}
             %a{href: '#'} 質問する
 
