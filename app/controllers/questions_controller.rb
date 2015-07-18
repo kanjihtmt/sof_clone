@@ -1,8 +1,10 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
+  #TODO: 閲覧数を取得する処理を実装すること
 
   def index
-    @questions = Question.includes(:questioner, :best_answer).all
+    #TODO: 投票数を求める処理をモデルに書くこと
+    @questions = Question.includes(:questioner).all.order(updated_at: :desc)
   end
 
   def show
@@ -18,35 +20,24 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.save
+      redirect_to @question, notice: '質問が作成されました。'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
-      else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.update(question_params)
+      redirect_to @question, notice: '質問が更新されました。'
+    else
+      render :edit
     end
   end
 
   def destroy
     @question.destroy
-    respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to questions_url, notice: '質問が削除されました。'
   end
 
   private
