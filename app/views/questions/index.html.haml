@@ -34,7 +34,7 @@
             .started
               %a{href:"#", class: 'started-link'}
                 更新日時
-                %span{title: question.updated_at, class:'relativetime'} 2 時間前
+                %span{title: question.updated_at, class:'relativetime'} #{time_ago_in_words question.updated_at}前
                 %a{href:'#'} #{question.questioner.try(:name)}
                 %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
