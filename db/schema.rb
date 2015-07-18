@@ -11,10 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713214115) do
+ActiveRecord::Schema.define(version: 20150718070301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.text     "body"
+    t.integer  "question_id"
+    t.integer  "answerer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "answers", ["answerer_id"], name: "index_answers_on_answerer_id", using: :btree
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "body"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "commenter_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
+  add_index "comments", ["commenter_id"], name: "index_comments_on_commenter_id", using: :btree
+
+  create_table "question_tags", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "question_tags", ["question_id", "tag_id"], name: "index_question_tags_on_question_id_and_tag_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"
@@ -22,9 +54,17 @@ ActiveRecord::Schema.define(version: 20150713214115) do
     t.integer  "best_answer_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "questioner_id"
   end
 
   add_index "questions", ["best_answer_id"], name: "index_questions_on_best_answer_id", using: :btree
+  add_index "questions", ["questioner_id"], name: "index_questions_on_questioner_id", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.text     "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -44,4 +84,18 @@ ActiveRecord::Schema.define(version: 20150713214115) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "votes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.integer  "value"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
+  add_index "votes", ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id", using: :btree
+
+  add_foreign_key "answers", "questions"
+  add_foreign_key "votes", "users"
 end
