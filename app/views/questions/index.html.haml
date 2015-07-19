@@ -30,16 +30,18 @@
             %h3
               = link_to question.title, question_path(question), {class: 'question-hyperlink'}
             .tags
-              %a{href: '#', class: 'post-tag', title: '', rel: 'tag'} Ruby
+              - question.tags.each do |tag|
+                = link_to(tag.title, '#', class: 'post-tag', title: tag.title, rel: 'tag')
             .started
-              %a{href:"#", class: 'started-link'}
-                更新日時
+              = link_to(question_path(question), class: 'started-link') do
+                更新日時:
                 %span{title: question.updated_at, class:'relativetime'} #{time_ago_in_words question.updated_at}前
-                %a{href:'#'} #{question.questioner.try(:name)}
-                %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
+              %a{href:'#'} #{question.questioner.try(:name)}
+              %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
   #sidebar.col-md-2
     #recent-tags.module
       %h4#h-recent-tags 最近のタグ
       #recent-tags-list
-        %a.post-tag
+        - @tags.each do |tag|
+          = link_to tag.title, '#', class: 'post-tag'
