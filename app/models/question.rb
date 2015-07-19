@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+  include VoteCountable
+
   scope :active, -> { order(updated_at: :desc, created_at: :desc) }
 
   belongs_to :questioner, class_name: 'User'
@@ -22,6 +24,5 @@ class Question < ActiveRecord::Base
       else
         @questions = self.all
     end
-    @questions
   end
 end
