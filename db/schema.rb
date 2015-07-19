@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150719064719) do
+ActiveRecord::Schema.define(version: 20150719074433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,15 +39,6 @@ ActiveRecord::Schema.define(version: 20150719064719) do
   add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
   add_index "comments", ["commenter_id"], name: "index_comments_on_commenter_id", using: :btree
 
-  create_table "question_tags", force: :cascade do |t|
-    t.integer  "question_id"
-    t.integer  "tag_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "question_tags", ["question_id", "tag_id"], name: "index_question_tags_on_question_id_and_tag_id", using: :btree
-
   create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
@@ -61,10 +52,20 @@ ActiveRecord::Schema.define(version: 20150719064719) do
   add_index "questions", ["best_answer_id"], name: "index_questions_on_best_answer_id", using: :btree
   add_index "questions", ["questioner_id"], name: "index_questions_on_questioner_id", using: :btree
 
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "taggings", ["question_id", "tag_id"], name: "index_taggings_on_question_id_and_tag_id", using: :btree
+
   create_table "tags", force: :cascade do |t|
     t.text     "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "taggings_count", default: 0
   end
 
   create_table "users", force: :cascade do |t|

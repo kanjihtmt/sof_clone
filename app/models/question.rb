@@ -8,8 +8,8 @@ class Question < ActiveRecord::Base
   belongs_to :best_answer, class_name: 'Answer'
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :votes, as: :votable, dependent: :destroy
-  has_many :question_tags, dependent: :destroy
-  has_many :tags, through: :question_tags
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
 
   def self.find_by_tab(tab)
     case tab

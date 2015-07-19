@@ -44,4 +44,6 @@
       %h4#h-recent-tags 最近のタグ
       #recent-tags-list
         - @tags.each do |tag|
-          = link_to tag.title, '#', class: 'post-tag'
+          %div
+            = link_to tag.title, '#', class: 'post-tag'
+            %span.item-multipler x #{tag.taggings_count}
