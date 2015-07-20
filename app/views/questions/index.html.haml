@@ -40,10 +40,5 @@
               %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
   #sidebar.col-md-2
-    #recent-tags.module
-      %h4#h-recent-tags 最近のタグ
-      #recent-tags-list
-        - @tags.each do |tag|
-          %div
-            = link_to tag.title, '#', class: 'post-tag'
-            %span.item-multipler x #{tag.taggings_count}
+    = render 'tags', tags: @tags
+
