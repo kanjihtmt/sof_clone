@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      question: 質問
+    attributes:
+      question:
+        title: タイトル
+        body: 内容
+        tag_list: タグ

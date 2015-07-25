@@ -1,22 +1,12 @@
-= form_for @question do |f|
-  - if @question.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@question.errors.count, "error")} prohibited this question from being saved:"
-      %ul
-        - @question.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for @question, {class: 'form-control input-lg', placeholder: 'タイトル', autofocus: true} do |f|
 
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :body
-    = f.text_area :body
-  .field
-    = f.label :best_answer_id
-    = f.number_field :best_answer_id
-  .field
-    = f.label :user
-    = f.text_field :user
+  = f.input :title, placeholder: 'プログラミングに関しての質問は何ですか？具体的に書いてください。'
+  = f.input :body, as: :text, input_html: {rows: 10, class: 'textarea'}
+
+  #preview
+    = raw(markdown(@question.body)) if @question.body
+
+  = f.input :tag_list, value: @question.tag_list, input_html: {'data-role' => 'tagsinput', tagindex: -1}
+
   .actions
-    = f.submit 'Save'
+    = f.button :submit , '質問する', {class: 'btn btn-primary'}

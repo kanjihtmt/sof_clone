@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: %i(index show)
   before_action :set_question, only: %i(show edit update destroy)
   before_action :set_tags, only: %i(index)
 
@@ -11,14 +12,20 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    #@question = Question.new
+    @question = current_user.questions.build
   end
 
   def edit
   end
 
+  def preview
+    @body = params[:body]
+    render partial: 'preview'
+  end
+
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.build question_params
 
     if @question.save
       redirect_to @question, notice: '質問が作成されました。'
@@ -46,6 +53,6 @@ class QuestionsController < ApplicationController
     end
 
     def question_params
-      params.require(:question).permit(:title, :body, :best_answer_id, :user_id)
+      params.require(:question).permit(:title, :body, :tag_list)
     end
 end

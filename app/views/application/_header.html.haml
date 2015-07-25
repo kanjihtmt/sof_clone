@@ -14,5 +14,5 @@
           %li
             %a{href: '#'} 未回答
           %li{class: controller_name == 'questions' && action_name == 'create' ? 'active' : ''}
-            %a{href: '#'} 質問する
+            = link_to '質問する', new_question_path
 
