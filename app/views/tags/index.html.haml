@@ -1,0 +1,19 @@
+.row
+  #mainbar.col-md-12
+    %h3 タグ
+    %ul.nav.nav-tabs{role: 'tablist'}
+      %li{class: !params[:tab] || params[:tab] == 'hot' ? 'active' : ''}
+        = link_to '人気', tags_path(tab: 'hot')
+      %li{class: params[:tab] == 'name' ? 'active' : ''}
+        = link_to '名前', tags_path(tab: 'name')
+      %li{class: params[:tab] == 'newest' ? 'active' : ''}
+        = link_to '新規', tags_path(tab: 'newest')
+
+    .description
+      %p タグとは、あなたの質問をよく似た他の質問と一緒に分類するキーワードまたはラベルのことです。適切なタグを使用することで、他のユーザーがあなたの質問を検索したり、質問に対して回答したりすることが容易になります。
+
+    .row
+      - @tags.each do |tag|
+        .col-md-3
+          %p= tag.title
+          %p= tag.taggings_count

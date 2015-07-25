@@ -5,5 +5,7 @@ Rails.application.routes.draw do
       post :preview
     end
   end
+  resources :tags, only: %i(index)
+
   devise_for :users
 end
