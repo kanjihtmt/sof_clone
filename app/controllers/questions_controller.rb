@@ -3,8 +3,8 @@ class QuestionsController < ApplicationController
   before_action :set_tags, only: %i(index)
 
   def index
-    #TODO: 投票数を求める処理をモデルに書くこと
-    @questions = Question.includes(:questioner, :tags).all.order(updated_at: :desc)
+    #@questions = Question.includes(:questioner, :tags).all.order(updated_at: :desc)
+    @questions = Question.page(params['page']).per(5).includes(:questioner, :tags).all.order(updated_at: :desc)
   end
 
   def show
