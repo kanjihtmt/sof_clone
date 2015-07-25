@@ -16,11 +16,11 @@
           .cp
             .votes
               .mini-counts
-                %span{title: "#{1} 票"} 1
+                %span{title: "#{question.total_votes_count} 票"} #{question.total_votes_count}
               %div 票
             .status{class: 'answered-accepted'}
               .mini-counts
-                %span{title: "#{0} 件の回答"} 0
+                %span{title: "#{question.answers.size} 件の回答"} #{question.answers.size}
               %div 回答
             .views
               .mini-counts
@@ -30,17 +30,14 @@
             %h3
               = link_to question.title, question_path(question), {class: 'question-hyperlink'}
             .tags
-              %a{href: '#', class: 'post-tag', title: '', rel: 'tag'} Ruby
+              - question.tags.each do |tag|
+                = link_to(tag.title, '#', class: 'post-tag', title: tag.title, rel: 'tag')
             .started
-              %a{href:"#", class: 'started-link'}
-                更新日時
-                %span{title: '2015-07-10 22:28:40Z', class:'relativetime'} 2 時間前
-                %a{href:'#'} senshin
-                %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
+              = link_to(question_path(question), class: 'started-link') do
+                更新日時:
+                %span{title: question.updated_at, class:'relativetime'} #{time_ago_in_words question.updated_at}前
+              %a{href:'#'} #{question.questioner.try(:name)}
+              %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
   #sidebar.col-md-2
-    #recent-tags.module
-      %h4#h-recent-tags 最近のタグ
-      #recent-tags-list
-        %a.post-tag
-
+    = render 'tags', tags: @tags
