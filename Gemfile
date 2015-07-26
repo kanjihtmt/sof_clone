@@ -21,6 +21,7 @@ gem 'simple_form'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 gem 'redcarpet'
+gem 'impressionist'
 
 group :development do
   gem 'better_errors'
