@@ -1,7 +1,5 @@
 class TagsController < ApplicationController
-
   def index
-    #@tags = Tag.all.order(tagging_count: :desc)
-    @tags = Tag.all
+    @tags = Tag.find_by_keyword_and_tab(params[:keyword], params[:tab])
   end
 end

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
       post :preview
     end
   end
-  resources :tags, only: %i(index)
+  resources :tags, only: %i(index) do
+    resources :questions
+  end
 
   devise_for :users
 end
