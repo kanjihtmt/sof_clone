@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    impressionist(@question, nil, :unique => [:session_hash])
   end
 
   def new

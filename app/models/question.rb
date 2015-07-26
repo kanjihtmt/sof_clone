@@ -11,7 +11,7 @@ class Question < ActiveRecord::Base
         where(updated_at: (Time.now - 2.day).at_beginning_of_day .. Time.now).order(answers_count: :desc)
       when 'week'
         where(updated_at: (Time.now - 6.day).at_beginning_of_day .. Time.now).order(answers_count: :desc)
-      when
+      when 'month'
         where(updated_at: (Time.now - 1.month).at_beginning_of_day .. Time.now).order(answers_count: :desc)
     end
   }

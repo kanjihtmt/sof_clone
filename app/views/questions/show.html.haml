@@ -1,15 +1,43 @@
 %p#notice= notice
 
-%p
-  %b Title:
-  = @question.title
-%p
-  %b Body:
-  = @question.body
-%p
-  %b Best answer:
-  = @question.best_answer_id
+.question-detail
+  .row
+    .col-md-12
+      .question-header
+        %h1= @question.title
+  .row
+    .col-md-9
+      .question
+        .votecell
+          %a.vote_up_off ▲
+          %span 6
+          %a.vote_up_off ▼
+          %a.star ★
+          %span 2
+        .postcell
+          .post-text
+            = raw(markdown(@question.body))
+            .post-taglist
+              - @question.tags.each do |tag|
+                = link_to tag.title, '#', class: 'post-tag'
+          .vt
+            = link_to '編集', edit_question_path(@question)
+          .post-signature
+            .user-action-time
+              回答時間
+              %span 9月29日 20:10
+      .answers
+        %h2 ◯件の回答
 
-= link_to 'Edit', edit_question_path(@question)
-\|
-= link_to 'Back', questions_path
+    .col-md-3
+      %p.label-key
+        質問を投稿
+        %b{title: @question.created_at} #{time_ago_in_words @question.created_at}前
+      %p.label-key
+        閲覧回数
+        %b #{@question.impressionist_count} 回
+      %p.label-key
+        アクティブ
+        %b{title: @question.updated_at} #{time_ago_in_words @question.updated_at}前
+
+      = render 'question_help'

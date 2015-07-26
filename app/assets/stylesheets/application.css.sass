@@ -17,6 +17,11 @@
 @import 'bootstrap-tagsinput'
 @import "questions"
 
+@mixin clearfix
+  content: " "
+  display: table
+  clear: both
+
 @mixin active_menu_item
   color: #fff
   background: #f90
@@ -37,6 +42,13 @@
 
 .description
   margin: 25px 0
+
+.label-key
+  color: #999
+  font-size: 14px
+  b
+    color: #444
+    font-weight: normal
 
 .navbar-right
   ul.dropdown-menu
