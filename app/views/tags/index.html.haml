@@ -14,13 +14,8 @@
 
     #search-box
       %span 検索するタグを入力
-      = hidden_field_tag 'selected_tab', params[:tab]
+      = hidden_field_tag 'selected_tab', params[:tab] || 'popular'
       = text_field(:tag, :keyword, value: params[:keyword])
 
-    .row
-      - @tags.each do |tag|
-        .col-md-3
-          %p
-            %a.post-tag #{tag.title}
-            x #{tag.taggings_count}
-          %p #{tag.taggings_count}件の質問数
+    #search-results
+      = render 'tags'
