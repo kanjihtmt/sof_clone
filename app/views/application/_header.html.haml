@@ -5,14 +5,14 @@
     #menus.col-md-6.col-sm-12
       .nav
         %ul
-          %li{class: controller_name == 'questions' && action_name != 'new' && action_name != 'edit' ? 'active' : ''}
+          %li{class: active_headerlink(controller_name, action_name) == 'questions' ? 'active' : ''}
             = link_to '質問', questions_path
-          %li{class: controller_name == 'tags' ? 'active' : ''}
+          %li{class: active_headerlink(controller_name, action_name) == 'tags' ? 'active' : ''}
             = link_to 'タグ', tags_path
-          %li{class: controller_name == 'users' ? 'active' : ''}
+          %li{class: active_headerlink(controller_name, action_name) == 'users' ? 'active' : ''}
             %a{href: '#'} ユーザ
-          %li
+          %li{class: active_headerlink(controller_name, action_name) == 'unanswered' ? 'active' : ''}
             %a{href: '#'} 未回答
-          %li{class: controller_name == 'questions' && (action_name == 'new' || action_name == 'edit') ? 'active' : ''}
+          %li{class: active_headerlink(controller_name, action_name) == 'ask_question' ? 'active' : ''}
             = link_to '質問する', new_question_path
 
