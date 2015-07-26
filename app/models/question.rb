@@ -1,11 +1,20 @@
 class Question < ActiveRecord::Base
   include VoteCountable
 
-  scope :active, -> { order(updated_at: :desc, created_at: :desc) }
-  scope :newest, -> { order(created_at: :desc)}
-  scope :hot, -> { where(updated_at: (Time.now - 2.day).at_beginning_of_day .. Time.now).order(answers_count: :desc) }
-  scope :week, -> { where(updated_at: (Time.now - 6.day).at_beginning_of_day .. Time.now).order(answers_count: :desc) }
-  scope :month, -> { where(updated_at: (Time.now - 1.month).at_beginning_of_day .. Time.now).order(answers_count: :desc) }
+  scope :sort, ->(sort_type) {
+    case (sort_type)
+      when 'active'
+        order(updated_at: :desc, created_at: :desc)
+      when 'newest'
+        order(created_at: :desc)
+      when 'hot'
+        where(updated_at: (Time.now - 2.day).at_beginning_of_day .. Time.now).order(answers_count: :desc)
+      when 'week'
+        where(updated_at: (Time.now - 6.day).at_beginning_of_day .. Time.now).order(answers_count: :desc)
+      when
+        where(updated_at: (Time.now - 1.month).at_beginning_of_day .. Time.now).order(answers_count: :desc)
+    end
+  }
 
   attr_accessor :tag_list
 
@@ -31,22 +40,6 @@ class Question < ActiveRecord::Base
      self.tag_list = self.tags.map(&:title).join(",") unless self.tag_list
   end
 
-  def self.find_by_tab(tab)
-    case tab
-      when 'active'
-        @questions = self.active
-      when 'hot'
-        @questions = self.hot
-      when 'week'
-        @questions = self.week
-      when 'month'
-        @questions = self.month
-      else
-        @questions = self.newest
-    end
-  end
+  is_impressionable
 
-  #def show_tags
-  #  self.tags.map(&:title).join(",")
-  #end
 end
