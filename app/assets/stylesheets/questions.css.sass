@@ -164,6 +164,17 @@
     display: inline-block
     float: right
     width: 30%
+    background-color: #e0eaf1
+    padding: 5px
+    .user-action-time
+      margin: 2px 0 4px 0
+      font-size: 13px
+    .gravatar-wrapper-32, .user-detail
+      float: left
+      display: inline-block
+    .user-detail
+      margin-left: 5px
+
 
   .question
   .answers
@@ -172,12 +183,55 @@
     width: 10%
     float: left
     display: inline-block
-    margin: 0 auto
     text-align: center
-    a, span
-      display: block
-      margin: auto 0
+    .vote
+      margin: 8px 0
+      a
+        display: block
+        text-indent: -9999px
+        margin: 0 auto
+        cursor: pointer
+        background-repeat: no-repeat
+      span
+        margin: 5px 0
+        font-size: 20px
+      a.vote-up
+        width: 32px
+        background: url('upvote.png') no-repeat
+      a.vote-down
+        width: 30px
+        background: url('downvote.png') no-repeat
+      .vote-count
+        margin: 0
+      a.favorite
+        width: 26px
+        height: 25px
+        background: url('inactive-star.png') no-repeat
+      a.favorite-active
+        width: 26px
+        height: 25px
+        background: url('active-star.png') no-repeat
+      .favorite-count
+        font-weight: normal
+        font-size: 12px
+
   .postcell
     width: 90%
     float: left
     display: inline-block
+  .comments
+    padding-left: 10%
+    margin-top: 20px
+    .comment p:first-child
+      border-top : 1px solid #e5e5e5
+    .comment p
+      padding: 5px 10px
+      border-bottom : 1px solid #e5e5e5
+      margin: 0
+    .comment-link
+      color: #888
+      opacity: .6
+      margin-top: 10px
+
+
+

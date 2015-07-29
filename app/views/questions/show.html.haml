@@ -9,11 +9,16 @@
     .col-md-9
       .question
         .votecell
-          %a.vote_up_off ▲
-          %span 6
-          %a.vote_up_off ▼
-          %a.star ★
-          %span 2
+          .vote
+            %a.vote-up 賛成投票
+          .vote
+            %span.vote-count 6
+          .vote
+            %a.vote-down 反対投票
+          .vote
+            %a.favorite お気に入り
+          .vote
+            %span.favorite-count 2
         .postcell
           .post-text
             = raw(markdown(@question.body))
@@ -24,10 +29,24 @@
             = link_to '編集', edit_question_path(@question)
           .post-signature
             .user-action-time
-              回答時間
+              質問日時
               %span 9月29日 20:10
+            .gravatar-wrapper-32
+              = image_tag @question.questioner.try(:gravatar_url, size: 32)
+            .user-detail
+              = @question.questioner.try(:name)
+      .comments
+        .comment
+          %p ただし、 nil や "dog" といった数字以外の要素は to_i すると 0 として扱われるので、注意してください。 –  Junichi Ito 9月29日 20:13
+          %p heliac2001さん ご回答いただきまして、ありがとうございます。 返信がついたことに気づくのが遅くなり申し訳ありません。 アドバイス通りeclipse.iniに１行追加し、かつeclipseをclean実行なども試しましたがエラー内容は変わりませんでした。 –  masayuki 2月20日 20:05
+        .commnet-form
+
+        .comment-link
+          %a{href: '#'} コメントを追加
       .answers
         %h2 ◯件の回答
+        - @question.answers.each do |answer|
+          %p answer.body
 
     .col-md-3
       %p.label-key
