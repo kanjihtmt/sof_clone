@@ -31,9 +31,11 @@ class Question < ActiveRecord::Base
   validates :tag_list, presence: { message: '少なくとも1つのタグを入力して下さい。人気のあるタグのリストを参照してください。' }
 
   before_save do
+    tags = []
     self.tag_list.split(',').each do |tag|
-      self.tags << Tag.find_or_initialize_by(title: tag)
+      tags << Tag.find_or_initialize_by(title: tag)
     end
+    self.tags = tags
   end
 
   after_find do
