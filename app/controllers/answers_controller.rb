@@ -22,19 +22,19 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      redirect_to @answer, notice: 'Answer was successfully updated.'
+      redirect_to question_url(@question), notice: '回答が登録されました。'
     else
       render :edit
     end
   end
 
   def destroy
-    #if @answer.answerer == current_user
+    if @answer.answerer == current_user
       @answer.destroy
       redirect_to question_url @answer.question, notice: '回答を削除しました。'
-    #else
-    #  redirect_to question_url @answer.question, notice: '他の人の回答は削除できません。'
-    #end
+    else
+      redirect_to question_url @answer.question, notice: '他の人の回答は削除できません。'
+    end
   end
 
   private
@@ -47,6 +47,6 @@ class AnswersController < ApplicationController
     end
 
     def answer_params
-      params[:answer]
+      params.require(:answer).permit(:body)
     end
 end

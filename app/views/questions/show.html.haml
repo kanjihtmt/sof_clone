@@ -38,10 +38,10 @@
           .comments
             .comment
               - @question.comments.each do |comment|
-                %p #{comment.body} – #{comment.commenter.name} 9月29日 20:13
-            .commnet-form
+                %p #{comment.body} – #{comment.commenter.try(:name)} #{time_ago_in_words comment.created_at}前
             .comment-link
-              %a{href: '#'} コメントを追加
+              %a.add-comment{href: '#', 'data-add-comment-path': new_question_comment_path(@question)} コメントを追加
+              .comment-form
 
       .answers
         - if @question.answers.size > 0
@@ -91,9 +91,10 @@
                   .comment
                     %p ただし、 nil や "dog" といった数字以外の要素は to_i すると 0 として扱われるので、注意してください。 –  Junichi Ito 9月29日 20:13
                     %p heliac2001さん ご回答いただきまして、ありがとうございます。 返信がついたことに気づくのが遅くなり申し訳ありません。 アドバイス通りeclipse.iniに１行追加し、かつeclipseをclean実行なども試しましたがエラー内容は変わりませんでした。 –  masayuki 2月20日 20:05
-                  .commnet-form
                   .comment-link
-                    %a{href: '#'} コメントを追加
+                    %a.add-comment{href: '#', 'data-add-comment-path': new_answer_comment_path(answer)} コメントを追加
+                    .comment-form
+
           = render 'answers/form'
     .col-md-3
       %p.label-key
