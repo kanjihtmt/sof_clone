@@ -12,4 +12,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   gravtastic
+
+  validates :name, presence: true, length: { minimum: 4, maximum: 20 }
 end
