@@ -175,9 +175,33 @@
     .user-detail
       margin-left: 5px
 
+  .answers:after
+    content: " "
+    display: table
+    clear: both
 
-  .question
   .answers
+    width: 100%
+    margin-top: 20px
+    ul
+      li
+        h2
+          margin: 0
+          border: 1px solid transparent
+          position: relative
+          display: block
+          padding: 10px 5px
+      li:first-child
+        width: 60%
+    .answer
+      margin: 20px 0 0 0
+      padding-bottom: 10px
+      border-bottom: 1px solid #ddd
+    .answer:after
+      content: " "
+      display: table
+      clear: both
+
 
   .votecell
     width: 10%
@@ -219,19 +243,27 @@
     width: 90%
     float: left
     display: inline-block
-  .comments
-    padding-left: 10%
-    margin-top: 20px
-    .comment p:first-child
-      border-top : 1px solid #e5e5e5
-    .comment p
-      padding: 5px 10px
-      border-bottom : 1px solid #e5e5e5
-      margin: 0
-    .comment-link
-      color: #888
-      opacity: .6
+    .post-footer
       margin-top: 10px
+      display: block
+      clear: both
+    .post-footer:after
+      content: " "
+      display: table
+      clear: both
+    .comments
+      clear: both
+      margin-top: 20px
+      .comment p:first-child
+        border-top : 1px solid #e5e5e5
+      .comment p
+        padding: 5px 10px
+        border-bottom : 1px solid #e5e5e5
+        margin: 0
+      .comment-link
+        color: #888
+        opacity: .6
+        margin-top: 10px
 
 
 

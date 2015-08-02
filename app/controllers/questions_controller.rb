@@ -10,10 +10,10 @@ class QuestionsController < ApplicationController
 
   def show
     impressionist(@question, nil, :unique => [:session_hash])
+    @answer = @question.answers.build
   end
 
   def new
-    #@question = Question.new
     @question = current_user.questions.build
   end
 
@@ -45,7 +45,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    redirect_to questions_url, notice: '質問が削除されました。'
+    redirect_to @questions, notice: '質問が削除されました。'
   end
 
   private

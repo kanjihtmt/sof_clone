@@ -20,7 +20,7 @@ class Question < ActiveRecord::Base
 
   belongs_to :questioner, class_name: 'User'
   belongs_to :best_answer, class_name: 'Answer'
-  has_many :answers
+  has_many :answers, -> { includes :answerer }
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :votes, as: :votable, dependent: :destroy
   has_many :taggings, dependent: :destroy
