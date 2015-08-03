@@ -1,0 +1,15 @@
+.votecell
+  .vote
+    = form_for [votable, Vote.new], remote: true, html: {id: "up_vote_at_#{votable.class.name.downcase}_#{votable.id}"} do |f|
+      = f.hidden_field :value, value: 1
+      = f.hidden_field :votable_type, value: votable.class
+      = f.hidden_field :votable_id, value: votable.id
+    %a.vote-up 賛成投票
+  .vote
+    %span.vote-count= votable.total_votes_count
+  .vote
+    %a.vote-down 反対投票
+    = form_for [votable, Vote.new], remote: true, html: {id: "down_vote_at_#{votable.class.name.downcase}_#{votable.id}"} do |f|
+      = f.hidden_field :value, value: -1
+      = f.hidden_field :votable_type, value: votable.class
+      = f.hidden_field :votable_id, value: votable.id

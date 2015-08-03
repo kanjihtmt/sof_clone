@@ -6,43 +6,9 @@
   .row
     .col-md-9
       .question
-        .votecell
-          .vote
-            %a.vote-up 賛成投票
-          .vote
-            %span.vote-count 6
-          .vote
-            %a.vote-down 反対投票
-          .vote
-            %a.favorite お気に入り
-          .vote
-            %span.favorite-count 2
+        = render partial: 'vote', locals: { votable: @question }
         .postcell
-          .post-text
-            = raw(markdown(@question.body))
-            .post-taglist
-              - @question.tags.each do |tag|
-                = link_to tag.title, '#', class: 'post-tag'
-          .post-footer
-            .vt
-              - if user_signed_in?
-                = link_to '編集', edit_question_path(@question)
-            .post-signature
-              .user-action-time
-                質問日時
-                %span 9月29日 20:10
-              .gravatar-wrapper-32
-                = image_tag @question.questioner.try(:gravatar_url, size: 32), width: 32, height: 32
-              .user-detail
-                = @question.questioner.try(:name)
-          .comments
-            .comment
-              - @question.comments.each do |comment|
-                %p #{comment.body} – #{comment.commenter.try(:name)} #{time_ago_in_words comment.created_at}前
-            .comment-link
-              %a.add-comment{href: '#', 'data-add-comment-path': new_question_comments_path(@question)} コメントを追加
-              .comment-form
-
+          = render partial: 'question', locals: { question: @question }
       .answers
         - if @question.answers.size > 0
           %ul.nav.nav-tabs{role: 'tablist'}
@@ -58,44 +24,11 @@
 
           - @question.answers.reorder(order_by_tab(params[:tab])).each do |answer|
             .answer
-              .votecell
-                .vote
-                  %a.vote-up 賛成投票
-                .vote
-                  %span.vote-count 6
-                .vote
-                  %a.vote-down 反対投票
-                .vote
-                  %a.favorite お気に入り
-                .vote
-                  %span.favorite-count 2
+              = render partial: 'vote', locals: { votable: answer }
               .postcell
-                .post-text
-                  = raw(markdown(answer.body))
-                .post-footer
-                  - if user_signed_in?
-                    .vt
-                      = link_to '編集', edit_question_answers_path(@question, answer)
-                      - if current_user == answer.answerer
-                        = link_to '削除', question_answer_path(@question, answer), :method => :delete,
-                            :data => { :confirm => '回答を削除しますか?' }
-                  .post-signature
-                    .user-action-time
-                      回答日時
-                      %span 9月29日 20:10
-                    .gravatar-wrapper-32
-                      = image_tag answer.answerer.try(:gravatar_url, size: 32), width: 32, height: 32
-                    .user-detail
-                      = answer.answerer.try(:name)
-                .comments
-                  .comment
-                    %p ただし、 nil や "dog" といった数字以外の要素は to_i すると 0 として扱われるので、注意してください。 –  Junichi Ito 9月29日 20:13
-                    %p heliac2001さん ご回答いただきまして、ありがとうございます。 返信がついたことに気づくのが遅くなり申し訳ありません。 アドバイス通りeclipse.iniに１行追加し、かつeclipseをclean実行なども試しましたがエラー内容は変わりませんでした。 –  masayuki 2月20日 20:05
-                  .comment-link
-                    %a.add-comment{href: '#', 'data-add-comment-path': new_answer_comments_path(answer)} コメントを追加
-                    .comment-form
-
+                = render partial: 'answer', locals: { question: @question, answer: answer }
           = render 'answers/form'
+
     .col-md-3
       %p.label-key
         質問を投稿
@@ -106,5 +39,4 @@
       %p.label-key
         アクティブ
         %b{title: @question.updated_at} #{time_ago_in_words @question.updated_at}前
-
       = render 'question_help'
