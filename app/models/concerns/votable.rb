@@ -1,4 +1,4 @@
-module VoteCountable
+module Votable
   extend ActiveSupport::Concern
 
   def total_votes_count
