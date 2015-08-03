@@ -1,7 +1,7 @@
 .question-detail
   .row
     .col-md-12
-      .question-header
+      .question-header{'data-islogin': user_signed_in? ? 1 : 0}
         %h1= @question.title
   .row
     .col-md-9

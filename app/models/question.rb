@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  include VoteCountable
+  include Votable
 
   scope :sort, ->(sort_type) {
     case (sort_type)

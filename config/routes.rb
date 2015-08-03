@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       end
     end
     resource :comments, only: %i(new create)
-    resource :votes
+    resource :votes, only: %i(new create)
 
     collection do
       post :preview
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :answers, only: [] do
     resource :comments, only: %i(new create)
-    resource :votes
+    resource :votes, only: %i(new create)
   end
 
   resources :tags, only: %i(index) do

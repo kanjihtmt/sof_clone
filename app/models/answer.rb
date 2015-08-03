@@ -1,5 +1,5 @@
 class Answer < ActiveRecord::Base
-  include VoteCountable
+  include Votable
 
   belongs_to :answerer, class_name: 'User'
   belongs_to :question, counter_cache: true
