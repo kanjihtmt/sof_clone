@@ -11,7 +11,7 @@ class VotesController < ApplicationController
     if @vote.save
       render json:  {votes_count: @votable.total_votes_count, message: '投票されました。'}
     else
-      render json: {error: '投票に失敗しました。'}
+      render json: {message: '投票に失敗しました。'}
     end
   end
 

@@ -31,4 +31,4 @@ $ ->
       $('.flash-message').html(flashMessage('info', data.message))
       $voteCount.text(data.votes_count)
     .fail (xhr, stat, err) ->
-      $('.flash-message').html(flashMessage('warning', 'エラーのため投票ができませんでした'))
+      $('.flash-message').html(flashMessage('warning', data.message))
