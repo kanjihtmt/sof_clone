@@ -2,21 +2,33 @@ $ ->
   $('.vote-action').click (e) ->
     e.preventDefault()
 
-    error = '''
-<div class="alert alert-warning alert-dismissable" role="alert">
+    flashMessage = (type, message) ->
+      flash = """
+<div class="alert alert-#{type} alert-dismissable" role="alert">
   <button aria-label="Close" class="close" data-dismiss="alert" type="button">
   <span aria-hidden="true">×</span>
   </button>
-  %s
+  #{message}
 </div>
-'''
+"""
     if $('.question-header').data('islogin') == 0
-      $('.flash-message').html(error)
+      $('.flash-message').html(flashMessage('warning', '投票するにはログインして下さい'))
       return
 
     $form = $(@).parent().find('form')
-    value = $form.children('#vote_value').val()
-    votable_type = $form.children('#vote_votable_type').val()
-    votable_id = $form.children('#vote_votable_id').val()
+    $voteCount = $(@).closest('.votecell').find('.vote-count')
 
-    alert('value: ' + value + ', votable_type:' + votable_type + ', votable_id:' + votable_id)
+    $.ajax({
+      url: $form.attr('action'),
+      type: 'POST',
+      dataType: 'json',
+      data: $form.serialize()
+      cache: false,
+      beforeSend: (xhr, set) ->
+        $('.flash-message').html('')
+    }).done (data, stat, xhr) ->
+      console.log { done: stat, data: data, xhr: xhr }
+      $('.flash-message').html(flashMessage('info', data.message))
+      $voteCount.text(data.votes_count)
+    .fail (xhr, stat, err) ->
+      $('.flash-message').html(flashMessage('warning', 'エラーのため投票ができませんでした'))
