@@ -1,7 +1,8 @@
 = simple_form_for([@commentable, @comment], remote: true) do |f|
   = f.input :body, label: false, input_html: {rows: 3, class: 'textarea'}
-  = f.hidden_field :commenter_id, value: current_user.id
-  = f.hidden_field :question_id, value: @question
+  = f.hidden_field :commentable_type, value: @commentable.class
+  = f.hidden_field :commentable_id, value: @commentable.id
 
   .actions
-    = f.button :submit , 'コメントする', {class: 'btn btn-primary'}
+    %button{class: 'btn btn-primary submit-comment'} コメントする
+
