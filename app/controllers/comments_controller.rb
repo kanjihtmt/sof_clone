@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_commentable, only: %i(create)
+  before_action :set_commentable, only: %i(new create)
 
   def new
     @comment = Comment.new
@@ -11,7 +11,8 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.build(comment_params.merge(commenter: current_user))
 
     if @comment.save
-      render json: @comment.attributes
+      render json: @comment.attributes.merge(commenter: current_user.name,
+                                             created_at: self.class.helpers.time_ago_in_words(@comment.created_at))
     else
       render json: { error_message: @comment.errors.attributes.first }
     end

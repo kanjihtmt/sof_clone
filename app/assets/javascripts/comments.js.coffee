@@ -24,6 +24,7 @@ $ ->
   $('.comment-form').on 'click', 'button', (e) ->
     e.preventDefault()
 
+    $button = $(@)
     $form = $(@).closest('form')
 
     $.ajax({
@@ -36,7 +37,9 @@ $ ->
         $('.flash-message').html('')
     }).done (data, stat, xhr) ->
       $('.flash-message').html(flashMessage('info', 'コメントを登録しました。'))
+
       comment = "<p>#{data.body} - #{data.commenter} #{data.created_at}"
-      $(@).parents('.comments').find('.comment').prepend(comment)
+      $button.parents('.comments').find('.comment').prepend(comment)
+      $('.textarea').val('')
     .fail (xhr, stat, err) ->
       $('.flash-message').html(flashMessage('warning', 'コメントの登録に失敗しました。'))
