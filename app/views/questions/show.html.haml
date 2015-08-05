@@ -22,20 +22,21 @@
               = link_to '票', is_answers_path?(controller_name) ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
             %li{class: params[:tab] == 'vote' ? 'active' : ''}
 
-          - if @question.best_answer
-            .answer
-              #best_answer
-                = render partial: 'vote', locals: { votable: @question.best_answer }
-                .postcell
-                  = render partial: 'answer', locals: { question: @question, answer: @question.best_answer }
-
-          - @question.answers.reorder(order_by_tab(params[:tab])).each do |answer|
-            .answer
-              - next if answer.id == @question.best_answer_id
-              = render partial: 'vote', locals: { votable: answer }
+        - if @question.best_answer
+          .answer
+            #best_answer
+              = render partial: 'vote', locals: { votable: @question.best_answer }
               .postcell
-                = render partial: 'answer', locals: { question: @question, answer: answer }
-          = render 'answers/form'
+                = render partial: 'answer', locals: { question: @question, answer: @question.best_answer }
+
+        - @question.answers.reorder(order_by_tab(params[:tab])).each do |answer|
+          - next if answer.id == @question.best_answer_id
+          .answer
+            = render partial: 'vote', locals: { votable: answer }
+            .postcell
+              = render partial: 'answer', locals: { question: @question, answer: answer }
+
+        = render 'answers/form'
 
     .col-md-3
       %p.label-key
