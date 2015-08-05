@@ -1,6 +1,6 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_votable, only: %i(create)
+  before_action :set_votable, only: %i(new create)
 
   def new
     @vote = Vote.new
