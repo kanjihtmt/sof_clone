@@ -10,6 +10,12 @@ $ ->
 """
   $('.add-comment').click (e) ->
     e.preventDefault()
+
+    if $('.question-header').data('islogin') == 0
+      $('.flash-message').html(flashMessage('warning', 'コメントするにはログインして下さい'))
+      $('body, html').animate({ scrollTop: 0 }, 500)
+      return
+
     $commentForm = $(@).parent('div').find('.comment-form')
     $(@).hide()
     $.get $(@).data('add-comment-path'), (html) ->
@@ -29,8 +35,8 @@ $ ->
       beforeSend: (xhr, set) ->
         $('.flash-message').html('')
     }).done (data, stat, xhr) ->
-      $('.flash-message').html(flashMessage('info', data.message))
+      $('.flash-message').html(flashMessage('info', 'コメントを登録しました。'))
       comment = "<p>#{data.body} - #{data.commenter} #{data.created_at}"
       $(@).parents('.comments').find('.comment').prepend(comment)
     .fail (xhr, stat, err) ->
-      $('.flash-message').html(flashMessage('warning', data.message))
+      $('.flash-message').html(flashMessage('warning', 'コメントの登録に失敗しました。'))

@@ -13,6 +13,7 @@ $ ->
 """
     if $('.question-header').data('islogin') == 0
       $('.flash-message').html(flashMessage('warning', '投票するにはログインして下さい'))
+      $('body, html').animate({ scrollTop: 0 }, 500)
       return
 
     $form = $(@).parent().find('form')
