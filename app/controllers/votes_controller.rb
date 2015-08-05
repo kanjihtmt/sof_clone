@@ -1,6 +1,6 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_votable
+  before_action :set_votable, only: %i(create)
 
   def new
     @vote = Vote.new
@@ -11,7 +11,7 @@ class VotesController < ApplicationController
     if @vote.save
       render json:  {votes_count: @votable.total_votes_count, message: '投票されました。'}
     else
-      render json: {message: '投票に失敗しました。'}
+      render json: { message: '投票に失敗しました。' }
     end
   end
 
@@ -20,7 +20,7 @@ class VotesController < ApplicationController
       params.require(:vote).permit(:value, :votable_type, :votable_id)
     end
 
-    def find_votable
+    def set_votable
       klass, id = request.path.split('/')[1, 2]
       @votable = klass.singularize.classify.constantize.find(id)
     end

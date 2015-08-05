@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_commentable, only: %i(new create edit update destroy)
+  before_action :set_commentable, only: %i(create)
 
   def new
     @comment = Comment.new
@@ -11,9 +11,9 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.build(comment_params.merge(commenter: current_user))
 
     if @comment.save
-      #redirect_to @comment, notice: 'コメントを登録しました。'
+      render json: @comment.attributes
     else
-      #render partial: 'comment'
+      render json: { error_message: @comment.errors.attributes.first }
     end
   end
 
@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:body, :commentable_type, :commentable_id)
     end
 
-    def find_commentable
+    def set_commentable
       klass, id = request.path.split('/')[1, 2]
       @commentable = klass.singularize.classify.constantize.find(id)
     end

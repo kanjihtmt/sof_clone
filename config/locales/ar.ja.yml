@@ -2,8 +2,11 @@ ja:
   activerecord:
     models:
       question: 質問
+      comment: コメント
     attributes:
       question:
         title: タイトル
         body: 内容
         tag_list: タグ
+      comment:
+        body: コメント内容
