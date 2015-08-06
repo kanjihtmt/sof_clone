@@ -28,6 +28,7 @@ class Question < ActiveRecord::Base
 
   validates :title, presence: true, length: { minimum: 8 }
   validates :body, presence: true, length: { minimum: 20 }
+  validates :questioner_id, presence: true
   validates :tag_list, presence: { message: '少なくとも1つのタグを入力して下さい。人気のあるタグのリストを参照してください。' }
 
   before_save do

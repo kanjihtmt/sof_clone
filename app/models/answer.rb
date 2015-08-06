@@ -7,4 +7,5 @@ class Answer < ActiveRecord::Base
   has_many :comments, -> { includes :commenter }, as: :commentable, dependent: :destroy
 
   validates :body, presence: true, length: { minimum: 20 }
+  validates :question_id, :answerer_id, presence: true
 end

@@ -7,6 +7,8 @@ class Tag < ActiveRecord::Base
   has_many :taggings, dependent: :destroy
   has_many :questions, through: :taggings
 
+  validates :title, presence: true
+
   def self.find_by_keyword_and_tab(keyword, tab)
     case tab
       when 'name'
