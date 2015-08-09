@@ -16,15 +16,15 @@
           .cp
             .votes
               .mini-counts
-                %span{title: "#{question.total_votes_count} 票"} #{question.total_votes_count}
+                %span{title: "#{question.total_votes_count} 票"}= question.total_votes_count
               %div 票
             .status{class: 'answered-accepted'}
               .mini-counts
-                %span{title: "#{question.answers.size} 件の回答"} #{question.answers.size}
+                %span{title: "#{question.answers.size} 件の回答"}= question.answers.size
               %div 回答
             .views
               .mini-counts
-                %span{title: "#{question.impressionist_count} 件の閲覧数"} #{question.impressionist_count}
+                %span{title: "#{question.impressionist_count} 件の閲覧数"}= question.impressionist_count
               %div 閲覧数
           .summary
             %h3
@@ -35,7 +35,7 @@
             .started
               = link_to(question_path(question), class: 'started-link') do
                 更新日時:
-                %span{title: question.updated_at, class:'relativetime'} #{time_ago_in_words question.updated_at}前
+                %span{title: question.updated_at, class:'relativetime'}= "#{time_ago_in_words question.updated_at}前"
               %a{href:'#'} #{question.questioner.try(:name)}
               %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
