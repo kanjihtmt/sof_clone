@@ -1,8 +1,9 @@
-#answer-form{'data-previewurl': preview_question_answers_path(@question)}
+#answer-form
   %h2 回答
 
   = simple_form_for([@question, @answer]) do |f|
-    = f.input :body, as: :text, label: false, input_html: {rows: 10, class: 'textarea'}
+    = f.input :body, as: :text, label: false, input_html: {rows: 10, class: 'textarea',
+        'data-previewurl': preview_question_answers_path(@question)}
 
     #preview
       = raw(markdown(@answer.body)) if @answer.body
