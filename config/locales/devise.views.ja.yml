@@ -3,6 +3,8 @@ ja:
     attributes:
       user:
         name: "表示名"
+        location: "場所"
+        about_me: "自己紹介"
         current_password: "現在のパスワード"
         email: "メールアドレス"
         password: "パスワード"

@@ -22,13 +22,7 @@ Rails.application.routes.draw do
   end
 
   namespace :mypage do
-    resource :users, except: %i(index create new) do
-      member do
-        get :profile
-        get :questions
-        get :answers
-      end
-    end
+    resource :users, only: %i(show edit update)
   end
 
   devise_for :users, controllers: { registrations: 'registrations' }

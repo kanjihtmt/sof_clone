@@ -1,0 +1,9 @@
+%h1 プロフィールを編集
+
+.row
+  .col-md-3
+    = image_tag(current_user.try(:gravatar_url, size: 164), width: 164, height: 164)
+  .col-md-9
+    = render 'form'
+    = link_to 'キャンセル', mypage_users_path
+
