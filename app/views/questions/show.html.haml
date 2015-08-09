@@ -41,11 +41,11 @@
     .col-md-3
       %p.label-key
         質問を投稿
-        %b{title: @question.created_at} #{time_ago_in_words @question.created_at}前
+        %b{title: @question.created_at}= "#{time_ago_in_words @question.created_at}前"
       %p.label-key
         閲覧回数
-        %b #{@question.impressionist_count} 回
+        %b= "#{@question.impressionist_count} 回"
       %p.label-key
         アクティブ
-        %b{title: @question.updated_at} #{time_ago_in_words @question.updated_at}前
+        %b{title: @question.updated_at}= "#{time_ago_in_words @question.updated_at}前"
       = render 'question_help'

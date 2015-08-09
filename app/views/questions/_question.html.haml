@@ -18,7 +18,7 @@
   .comments
     .comment
       - question.comments.each do |comment|
-        %p #{comment.body} – #{comment.commenter.try(:name)} #{time_ago_in_words comment.created_at}前
+        %p= "#{comment.body} – #{comment.commenter.try(:name)} #{time_ago_in_words comment.created_at}前"
     .comment-link
       %a.add-comment{href: '#', 'data-add-comment-path': new_question_comments_path(question)} コメントを追加
       .comment-form

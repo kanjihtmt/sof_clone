@@ -18,7 +18,7 @@
               .mini-counts
                 %span{title: "#{question.total_votes_count} 票"}= question.total_votes_count
               %div 票
-            .status{class: 'answered-accepted'}
+            .status{class: status(question)}
               .mini-counts
                 %span{title: "#{question.answers.size} 件の回答"}= question.answers.size
               %div 回答
@@ -36,7 +36,7 @@
               = link_to(question_path(question), class: 'started-link') do
                 更新日時:
                 %span{title: question.updated_at, class:'relativetime'}= "#{time_ago_in_words question.updated_at}前"
-              %a{href:'#'} #{question.questioner.try(:name)}
+              %a{href:'#'}= question.questioner.try(:name)
               %span{title: '信用度スコア:', dir: 'ltr', class: 'reputation-score'} 105
 
   #sidebar.col-md-2

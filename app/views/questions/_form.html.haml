@@ -7,7 +7,7 @@
   #preview
     = raw(markdown(@question.body)) if @question.body
 
-  = f.input :tag_list, value: @question.tag_list, input_html: {'data-role' => 'tagsinput', tagindex: -1}
+  = f.input :tag_list, value: @question.tag_list, input_html: {'data-role': 'tagsinput', tagindex: -1}
 
   .actions
     = f.button :submit , '質問する', {class: 'btn btn-primary'}

@@ -2,6 +2,6 @@
   - @tags.each do |tag|
     .col-md-3
       %p
-        %a.post-tag #{tag.title}
-        x #{tag.taggings_count}
-      %p #{tag.taggings_count}件の質問数
+        %a.post-tag= tag.title
+        = "x #{tag.taggings_count}"
+      %p= "#{tag.taggings_count}件の質問数"

@@ -2,7 +2,7 @@
 %html{lang: 'ja'}
   %head
     %meta{charset: 'utf-8'}
-    %meta{content: 'IE=edge', 'http-equiv' => "X-UA-Compatible"}
+    %meta{content: 'IE=edge', 'http-equiv': "X-UA-Compatible"}
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}
     %title Stack Overflow Clone
     = stylesheet_link_tag 'application', media: 'all'
@@ -20,13 +20,13 @@
           .col-md-12
             - if notice
               %div{class: 'alert alert-info alert-dismissable', role: 'alert'}
-                %button.close{type: 'button', 'data-dismiss' => 'alert', 'aria-label' => 'Close'}
-                  %span{'aria-hidden' =>'true'} &times;
+                %button.close{type: 'button', 'data-dismiss': 'alert', 'aria-label': 'Close'}
+                  %span{'aria-hidden': 'true'} &times;
                 = notice
             - if alert
               %div{class: 'alert alert-warning alert-dismissable', role: 'alert'}
-                %button.close{type: 'button', 'data-dismiss' => 'alert', 'aria-label' => 'Close'}
-                  %span{'aria-hidden' =>'true'} &times;
+                %button.close{type: 'button', 'data-dismiss': 'alert', 'aria-label': 'Close'}
+                  %span{'aria-hidden': true} &times;
                 = alert
 
         = yield

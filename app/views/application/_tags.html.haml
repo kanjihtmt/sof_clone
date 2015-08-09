@@ -4,4 +4,4 @@
     - tags.each do |tag|
       %div
         = link_to tag.title, '#', class: 'post-tag'
-        %span.item-multipler x #{tag.taggings_count}
+        %span.item-multipler= "x #{tag.taggings_count}"
