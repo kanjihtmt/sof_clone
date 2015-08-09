@@ -10,10 +10,10 @@
         .postcell
           = render partial: 'question', locals: { question: @question }
       .answers
-        - if @question.answers.size > 0
+        - if @question.answers_count > 0
           %ul.nav.nav-tabs{role: 'tablist'}
             %li
-              %h2 #{@question.answers.size}件の回答
+              %h2 #{@question.answers_count}件の回答
             %li{class: params[:tab].nil? || params[:tab] == 'active' ? 'active' : ''}
               = link_to 'アクティブ', is_answers_path?(controller_name) ? question_answers_path(tab: 'active') : question_path(tab: 'active')
             %li{class: params[:tab] == 'oldest' ? 'active' : ''}
