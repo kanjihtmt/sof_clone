@@ -5,7 +5,7 @@ module ApplicationHelper
     Redcarpet::Markdown.new(render, options).render text
   end
 
-  def active_headerlink(controller_name, action_name)
+  def current_header
     begin
       ACTIVE_HEADER_LINKS[controller_name.to_sym][action_name.to_sym]
     rescue NoMethodError

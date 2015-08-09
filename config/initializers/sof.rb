@@ -6,7 +6,9 @@ ACTIVE_HEADER_LINKS = {
     show: 'questions'
   },
   users: {
-    index: 'users'
+    index: 'users',
+    show: 'users',
+    edit: 'users'
   },
   tags: {
     index: 'tags'
