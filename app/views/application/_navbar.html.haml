@@ -12,10 +12,13 @@
       %ul.nav.navbar-nav.navbar-right
         %li
           = link_to "登録", new_registration_path('user')
-        %li
-          - if user_signed_in?
+        - if user_signed_in?
+          %li.avatar
+            = link_to image_tag(current_user.try(:gravatar_url, size: 32), width: 32, height: 32), mypage_users_path
+          %li
             = link_to 'ログアウト', destroy_user_session_path, method: :delete
-          - else
+        - else
+          %li
             = link_to "ログイン", new_session_path('user')
         %li
           %a{href: 'http://ja.stackoverflow.com/tour'} ツアー
