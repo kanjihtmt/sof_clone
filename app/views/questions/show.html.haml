@@ -15,11 +15,11 @@
             %li
               %h2 #{@question.answers_count}件の回答
             %li{class: params[:tab].nil? || params[:tab] == 'active' ? 'active' : ''}
-              = link_to 'アクティブ', is_answers_path?(controller_name) ? question_answers_path(tab: 'active') : question_path(tab: 'active')
+              = link_to 'アクティブ', answers_path?(controller_name) ? question_answers_path(tab: 'active') : question_path(tab: 'active')
             %li{class: params[:tab] == 'oldest' ? 'active' : ''}
-              = link_to '古い順', is_answers_path?(controller_name) ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
+              = link_to '古い順', answers_path?(controller_name) ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
             %li{class: params[:tab] == 'vote' ? 'active' : ''}
-              = link_to '票', is_answers_path?(controller_name) ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
+              = link_to '票', answers_path?(controller_name) ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
             %li{class: params[:tab] == 'vote' ? 'active' : ''}
 
         - if @question.best_answer

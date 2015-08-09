@@ -10,9 +10,12 @@ module QuestionHelper
     end
   end
 
-  def is_answers_path?(controller)
-    return true if controller == 'answers'
-    false
+  def answers_path?(controller)
+    if controller == 'answers'
+      true
+    else
+      false
+    end
   end
 
   def status(question = nil)
