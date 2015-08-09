@@ -10,9 +10,10 @@
           %li{class: current_header == 'tags' ? 'active' : ''}
             = link_to 'タグ', tags_path
           %li{class: current_header == 'users' ? 'active' : ''}
-            %a{href: '#'} ユーザ
+            = link_to 'ユーザ', users_path
           %li{class: current_header == 'unanswered' ? 'active' : ''}
-            %a{href: '#'} 未回答
+            = link_to '未回答', unanswered_questions_path
+
           %li{class: current_header == 'ask_question' ? 'active' : ''}
             = link_to '質問する', new_question_path
 
