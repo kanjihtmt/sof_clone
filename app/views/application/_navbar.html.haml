@@ -7,7 +7,7 @@
         %span.icon-bar
         %span.icon-bar
     #navbar.navbar-collapse.collapse
-      = form_tag({controller: :questions, action: :search}, method: :get, class: 'navbar-form navbar-right') do
+      = form_tag(search_questions_path, method: :get, class: 'navbar-form navbar-right') do
         = text_field_tag :keyword, '', class: 'form-control', placeholder: '検索'
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
