@@ -23,6 +23,7 @@ gem 'kaminari-bootstrap'
 gem 'redcarpet'
 gem 'impressionist'
 gem 'gravtastic'
+gem 'ransack'
 
 group :development do
   gem 'better_errors'
