@@ -8,8 +8,12 @@ Rails.application.routes.draw do
     resource :comments, only: %i(new create)
     resource :votes, only: %i(new create)
 
-    post :preview, on: :collection
-    post :accept, on: :member
+    collection do
+      get :search
+      get :unanswered
+      post :preview
+      post :accept
+    end
   end
 
   resources :answers, only: [] do
@@ -17,13 +21,13 @@ Rails.application.routes.draw do
     resource :votes, only: %i(new create)
   end
 
-  resources :tags, only: %i(index) do
-    resources :questions
-  end
+  resources :tags, only: %i(index)
 
   namespace :mypage do
     resource :users, only: %i(show edit update)
   end
 
   devise_for :users, controllers: { registrations: 'registrations' }
+
+  resources :users, only: %i(index show)
 end

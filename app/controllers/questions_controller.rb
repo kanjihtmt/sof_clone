@@ -1,11 +1,20 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: %i(index show)
+  before_action :authenticate_user!, except: %i(index show search)
   before_action :set_question, only: %i(show edit update destroy)
-  before_action :set_tags, only: %i(index)
+  before_action :set_tags, only: %i(index unanswered search)
 
   def index
-    #@questions = Question.includes(:questioner, :tags).all.order(updated_at: :desc)
-    @questions = Question.page(params['page']).per(5).includes(:questioner, :tags).all.order(updated_at: :desc)
+    @questions = Question.page(params['page']).per(PAGE_MAX).includes(:questioner, :tags).sort(params[:tab])
+  end
+
+  def unanswered
+    @questions = Question.page(params['page']).per(PAGE_MAX).includes(:questioner, :tags).sort('unanswered')
+    render :index
+  end
+
+  def search
+    @questions = Question.search(title_or_body_cont: params[:keyword]).result.page(params['page']).per(PAGE_MAX).includes(:questioner, :tags)
+    render :index
   end
 
   def show

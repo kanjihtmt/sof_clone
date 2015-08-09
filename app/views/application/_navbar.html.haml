@@ -7,8 +7,8 @@
         %span.icon-bar
         %span.icon-bar
     #navbar.navbar-collapse.collapse
-      %form.navbar-form.navbar-right
-        %input.form-control{type: 'text', placeholder: '検索'}
+      = form_tag({controller: :questions, action: :search}, method: :get, class: 'navbar-form navbar-right') do
+        = text_field_tag :keyword, '', class: 'form-control', placeholder: '検索'
       %ul.nav.navbar-nav.navbar-right
         %li
           = link_to "登録", new_registration_path('user')
