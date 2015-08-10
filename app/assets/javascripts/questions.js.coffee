@@ -5,3 +5,8 @@ $ ->
     $.post $(@).data('previewurl'), body: $(@).val(), (html) ->
       $preview.html(html)
 
+  $('.accept-action').click (e) ->
+    e.preventDefault()
+    $form = $(@).parent().find('form')
+
+    $form.submit()

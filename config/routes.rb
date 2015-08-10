@@ -12,8 +12,9 @@ Rails.application.routes.draw do
       get :search
       get :unanswered
       post :preview
-      post :accept
     end
+
+    post :accept, on: :member
   end
 
   resources :answers, only: [] do

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i(index show search)
-  before_action :set_question, only: %i(show edit update destroy)
+  before_action :set_question, only: %i(show edit update destroy accept)
   before_action :set_tags, only: %i(index unanswered search)
 
   def index
@@ -27,6 +27,19 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+  end
+
+  def accept
+    if @question.questioner != current_user
+      redirect_to @question, notice: '承認処理は正しく実行されませんでした。自分の質問の回答のみ承認できます。' and return
+    end
+
+    @question.best_answer = @question.answers.find(question_params[:best_answer_id])
+    if @question.save
+      redirect_to @question, notice: '選択した回答を承認しました。'
+    else
+      render :show
+    end
   end
 
   def preview
@@ -63,6 +76,6 @@ class QuestionsController < ApplicationController
     end
 
     def question_params
-      params.require(:question).permit(:title, :body, :tag_list, :questioner_id)
+      params.require(:question).permit(:title, :body, :tag_list, :questioner_id, :best_answer_id)
     end
 end

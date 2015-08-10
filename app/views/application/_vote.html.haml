@@ -13,3 +13,11 @@
       = f.hidden_field :value, value: -1
       = f.hidden_field :votable_type, value: votable.class
       = f.hidden_field :votable_id, value: votable.id
+  - if @question.best_answer == votable
+    .vote
+      %span.accepted 承認済
+  - elsif defined?(current_user) && @question.questioner == current_user && votable.is_a?(Answer) && !@question.best_answer
+    .vote
+      %a.accept-action{class: 'unaccepted'} 未承認
+      = form_for @question, url: accept_question_path(@question), method: :post do |f|
+        = f.hidden_field :best_answer_id, value: votable.id
