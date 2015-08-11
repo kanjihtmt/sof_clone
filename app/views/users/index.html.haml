@@ -1,0 +1,11 @@
+.row
+  #mainbar.col-md-12
+    %h3 ユーザ
+
+    #search-box
+      %span 検索するユーザを入力
+      = hidden_field_tag 'selected_tab', params[:tab] || ''
+      = text_field(:user, :name, 'data-action-url': users_path, class: 'searchable-field')
+
+#search-results
+  = render 'users'

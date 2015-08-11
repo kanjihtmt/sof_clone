@@ -15,7 +15,7 @@
     #search-box
       %span 検索するタグを入力
       = hidden_field_tag 'selected_tab', params[:tab] || 'popular'
-      = text_field(:tag, :keyword, value: params[:keyword])
+      = text_field(:tag, :keyword, value: params[:keyword], 'data-action-url': tags_path, class: 'searchable-field')
 
     #search-results
       = render 'tags'
