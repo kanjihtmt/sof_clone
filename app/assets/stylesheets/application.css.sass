@@ -18,6 +18,15 @@
 @import "questions"
 @import "users"
 
+html,body
+  height: 100%
+
+.wrapper
+  min-height: 100%
+  height: auto
+  margin: 0 auto -100px
+  padding: 0 0 100px
+
 @mixin clearfix
   content: " "
   display: table
@@ -35,7 +44,7 @@
 .bootstrap-tagsinput
   display: block
 
-.wrapper
+.contents
   padding: 48px 0
 
 .textarea
@@ -111,6 +120,7 @@
               @include active_menu_item
 
 #footer
+  height: 100px
   margin-top: 70px
   background: #2f2f2f
   .footerwrap
