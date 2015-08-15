@@ -25,9 +25,16 @@ module SofClone
     config.generators do |g|
       g.helper false
       g.assets false
-      g.test_framework :rspec
+      g.test_framework :rspec,
+        fixtures: true,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false,
+        controller_specs: true,
+        request_specs: false
       g.controller_specs false
       g.view_specs false
+      g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
