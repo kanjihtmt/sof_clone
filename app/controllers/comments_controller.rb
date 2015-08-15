@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
       render json: @comment.attributes.merge(commenter: current_user.name,
                                              created_at: self.class.helpers.time_ago_in_words(@comment.created_at))
     else
-      render json: { error_message: @comment.errors.attributes.first }
+      render json: { messages: @comment.errors.full_messages }, status: 422
     end
   end
 

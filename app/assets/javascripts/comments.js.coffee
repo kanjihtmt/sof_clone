@@ -41,5 +41,8 @@ $ ->
       comment = "<p>#{data.body} - #{data.commenter} #{data.created_at}"
       $button.parents('.comments').find('.comment').prepend(comment)
       $('.textarea').val('')
-    .fail (xhr, stat, err) ->
-      $('.flash-message').html(flashMessage('warning', 'コメントの登録に失敗しました。'))
+    .fail (data) ->
+      messages = ''
+      data.responseJSON.messages.forEach (message, i) ->
+        messages = messages + '・&nbsp;' + message + '<br>'
+      $('.flash-message').html(flashMessage('warning', messages))
