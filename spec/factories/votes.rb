@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :vote do
-    user nil
-votable nil
-value 1
+    user_id 1
+    votable_id 1
+    votable_type 'Question'
+    value 1
   end
 
 end
