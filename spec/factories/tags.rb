@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :tag do
-    body "MyText"
+    title 'rails'
   end
-
 end
