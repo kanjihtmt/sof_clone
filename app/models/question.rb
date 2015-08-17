@@ -32,20 +32,19 @@ class Question < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 8 }
   validates :body, presence: true, length: { minimum: 20 }
   validates :questioner_id, presence: true
-  validates :tag_list, presence: { message: '少なくとも1つのタグを入力して下さい。' }
+  validates :tag_list, presence: { message: '少なくとも1つ以上のタグを入力してください。' }
 
   before_save do
     tags = []
     self.tag_list.split(',').each do |tag|
-      tags << Tag.find_or_initialize_by(title: tag)
+      tags << Tag.find_or_create_by(title: tag)
     end
     self.tags = tags
   end
 
   after_find do
-     self.tag_list = self.tags.map(&:title).join(",") unless self.tag_list
+    self.tag_list = self.tags.map(&:title).join(",") unless self.tag_list
   end
 
   is_impressionable
-
 end
