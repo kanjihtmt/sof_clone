@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :answer do
-    body "MyText"
+    body "回答です。回答です。回答です。回答です。回答です。"
     question nil
-    answerer 1
+    answerer nil
   end
 end
