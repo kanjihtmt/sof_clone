@@ -35,6 +35,6 @@ describe Vote do
     Vote.create(value: 1, votable_type: 'Question', votable_id: 1, user: user)
     vote = Vote.new(value: -1, votable_type: 'Question', votable_id: 1, user: user)
     vote.valid?
-    expect(vote.errors[:user_id]).to include("同じユーザが2回以上、投票することはできません")
+    expect(vote.errors[:user_id]).to include("は2回以上行うことはできません")
   end
 end
