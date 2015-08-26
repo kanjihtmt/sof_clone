@@ -3,6 +3,8 @@ ja:
     models:
       question: 質問
       comment: コメント
+      user: ユーザ
+      vote: 投票
     attributes:
       question:
         title: タイトル
@@ -10,3 +12,5 @@ ja:
         tag_list: タグ
       comment:
         body: コメント内容
+      vote:
+        user_id: 投票

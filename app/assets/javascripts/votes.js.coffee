@@ -28,8 +28,11 @@ $ ->
       beforeSend: (xhr, set) ->
         $('.flash-message').html('')
     }).done (data, stat, xhr) ->
-      console.log { done: stat, data: data, xhr: xhr }
-      $('.flash-message').html(flashMessage('info', data.message))
+      $('.flash-message').html(flashMessage('info', '投票が完了しました。'))
       $voteCount.text(data.votes_count)
-    .fail (xhr, stat, err) ->
-      $('.flash-message').html(flashMessage('warning', data.message))
+    .fail (data) ->
+      messages = ''
+      data.responseJSON.messages.forEach (message, i) ->
+        messages = messages + '・&nbsp;' + message + '<br>'
+      $('.flash-message').html(flashMessage('warning', messages))
+      $('html,body').animate({scrollTop: 0}, 'fast')
