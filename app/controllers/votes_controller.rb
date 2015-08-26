@@ -1,10 +1,6 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_votable, only: %i(new create)
-
-  def new
-    @vote = Vote.new
-  end
+  before_action :set_votable, only: %i(create)
 
   def create
     @vote = current_user.votes.build(vote_params)
