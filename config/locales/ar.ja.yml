@@ -14,3 +14,6 @@ ja:
         body: コメント内容
       vote:
         user_id: 投票
+        votable_type: 投票種別
+        votable_id: 投票ID
+        value: 投票値
