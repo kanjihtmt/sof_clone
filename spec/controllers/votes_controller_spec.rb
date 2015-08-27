@@ -54,8 +54,7 @@ describe VotesController do
 
     describe 'Answer' do
       before do
-        @user = create(:user, id: 99, name: 'yui123',
-                       email: 'yui@example.com', password: 'yui12345')
+        @user = create(:user, id: 99, name: 'yui123', email: 'yui@example.com')
         @answer = create(:answer, answerer: @user, question: question)
       end
 
