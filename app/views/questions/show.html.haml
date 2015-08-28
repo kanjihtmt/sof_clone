@@ -19,7 +19,7 @@
             %li{class: params[:tab] == 'oldest' ? 'active' : ''}
               = link_to '古い順', answers_path? ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
             %li{class: params[:tab] == 'vote' ? 'active' : ''}
-              = link_to '票', answers_path? ? question_answers_path(tab: 'oldest') : question_path(tab: 'oldest')
+              = link_to '票', answers_path? ? question_answers_path(tab: 'vote') : question_path(tab: 'vote')
             %li{class: params[:tab] == 'vote' ? 'active' : ''}
 
         - if @question.best_answer
@@ -29,7 +29,7 @@
               .postcell
                 = render partial: 'questions/answer', locals: { question: @question, answer: @question.best_answer }
 
-        - @question.answers.reorder(order_by_tab(params[:tab])).each do |answer|
+        - sorted_answers_by_tab(@question.answers, params[:tab]).each do |answer|
           - next if answer.id == @question.best_answer_id
           .answer
             = render partial: 'vote', locals: { votable: answer }
