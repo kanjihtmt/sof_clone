@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       render json: @comment.attributes.merge(commenter: current_user.name,
-                                             created_at: self.class.helpers.time_ago_in_words(@comment.created_at))
+        created_at: self.class.helpers.time_ago_in_words(@comment.created_at))
     else
       render json: { messages: @comment.errors.full_messages }, status: 422
     end
