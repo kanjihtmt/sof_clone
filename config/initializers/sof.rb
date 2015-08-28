@@ -1,5 +1,5 @@
 TOP_PAGE_MAX = 10
-PAGE_MAX = 5
+PAGE_MAX = 15
 
 ACTIVE_HEADER_LINKS = {
   questions: {
