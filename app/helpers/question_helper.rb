@@ -10,8 +10,8 @@ module QuestionHelper
     end
   end
 
-  def answers_path?(controller)
-    if controller == 'answers'
+  def answers_path?
+    if controller_name == 'answers'
       true
     else
       false
