@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: %i(index show search)
+  before_action :authenticate_user!, except: %i(index unanswered show search)
   before_action :set_question, only: %i(show edit update destroy accept)
   before_action :set_tags, only: %i(index unanswered search)
 
