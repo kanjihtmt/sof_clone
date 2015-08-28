@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'tops#index'
 
   resources :questions, except: %i(destroy) do
-    resource :answers, except: %i(show) do
+    resource :answers, except: %i(show new) do
       post :preview, on: :collection
     end
     resource :comments, only: %i(new create)

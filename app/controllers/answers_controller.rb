@@ -3,7 +3,20 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: %i(edit update destroy)
   before_action :set_question, only: %i(create edit update destroy)
 
+  def preview
+    @body = params[:body]
+    render partial: 'preview'
+  end
+
   def edit
+  end
+
+  def update
+    if @answer.update(answer_params)
+      redirect_to question_url(@question), notice: '回答が登録されました。'
+    else
+      render :edit
+    end
   end
 
   def create
@@ -15,25 +28,12 @@ class AnswersController < ApplicationController
     end
   end
 
-  def preview
-    @body = params[:body]
-    render partial: 'preview'
-  end
-
-  def update
-    if @answer.update(answer_params)
-      redirect_to question_url(@question), notice: '回答が登録されました。'
-    else
-      render :edit
-    end
-  end
-
   def destroy
     if @answer.answerer == current_user
       @answer.destroy
       redirect_to question_url @answer.question, notice: '回答を削除しました。'
     else
-      redirect_to question_url @answer.question, notice: '他の人の回答は削除できません。'
+      redirect_to question_url @answer.question, alert: '他の人の回答は削除できません。'
     end
   end
 
