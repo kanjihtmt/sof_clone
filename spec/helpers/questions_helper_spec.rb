@@ -1,10 +1,45 @@
 require 'rails_helper'
 
 describe QuestionHelper do
-  describe '#order_by_tab' do
-    it 'タブがアクティブの場合は更新日の降順の条件を取得すること'
-    it 'タグが古い順の場合は作成日の昇順の条件を取得すること'
-    it 'タブが
+  describe '#sorted_answers_by_tab' do
+    before do
+      @question = create(:question)
+      user =  create(:user,  email: 'aaa@example.com', id: 1)
+      user2 = create(:user, email: 'bbb@example.com', id: 2)
+      user3 = create(:user, email: 'ccc@example.com', id: 3)
+
+      # 投票数2件の回答
+      answer1 = create(:answer, id: 1, answerer: user, question: @question,
+             created_at: 2.day.ago, updated_at: 2.day.ago)
+      create(:vote, value: 1, votable_type: answer1.class.name, votable_id: answer1.id, user_id: 1)
+      create(:vote, value: 1, votable_type: answer1.class.name, votable_id: answer1.id, user_id: 2)
+
+      # 投票数0件の回答
+      answer2 = create(:answer, id: 2, answerer: user, question: @question,
+             created_at: 3.day.ago, updated_at: 1.day.ago)
+
+      # 投票数3件の回答
+      answer3 = create(:answer, id: 3, answerer: user, question: @question,
+             created_at: 4.day.ago, updated_at: 3.day.ago)
+      create(:vote, value: 1, votable_type: answer3.class.name, votable_id: answer3.id, user_id: 1)
+      create(:vote, value: 1, votable_type: answer3.class.name, votable_id: answer3.id, user_id: 2)
+      create(:vote, value: 1, votable_type: answer3.class.name, votable_id: answer3.id, user_id: 3)
+    end
+
+    it 'タブがアクティブの場合は更新日の降順でソートされた回答一覧を取得すること' do
+      expect(helper.sorted_answers_by_tab(@question.answers, 'active').map(&:id))
+        .to eq [2, 1, 3]
+    end
+
+    it 'タグが古い順の場合は作成日の昇順でソートされた回答一覧を取得すること' do
+      expect(helper.sorted_answers_by_tab(@question.answers, 'oldest').map(&:id))
+        .to eq [3, 2, 1]
+    end
+
+    it 'タブが票の場合は票が多い順でソートされた回答一覧を取得すること' do
+      expect(helper.sorted_answers_by_tab(@question.answers, 'vote').map(&:id))
+        .to eq [3, 1, 2]
+    end
   end
 
   describe '#answers_path?' do

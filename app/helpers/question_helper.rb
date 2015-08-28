@@ -1,12 +1,16 @@
 module QuestionHelper
-  def order_by_tab(tab)
+  def sorted_answers_by_tab(answers, tab)
     case tab
       when 'active'
-        {updated_at: :desc}
+        answers.reorder({updated_at: :desc})
       when 'oldest'
-        {created_at: :asc}
+        answers.reorder({created_at: :asc})
+      when 'vote'
+        answers.reorder({updated_at: :desc}).sort do |a, b|
+          b.total_votes_count <=> a.total_votes_count
+        end
       else
-        {body: :asc}
+        answers.reorder({updated_at: :desc})
     end
   end
 
