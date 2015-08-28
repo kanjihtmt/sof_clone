@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      redirect_to question_url(@question), notice: '回答が登録されました。'
+      redirect_to question_url(@question), notice: '回答が更新されました。'
     else
       render :edit
     end
