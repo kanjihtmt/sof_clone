@@ -43,14 +43,14 @@ EOF
 
   describe '#current_header' do
     it "コントローラ・アクションを指定すれば現在アクティブにすべきヘッダを返すこと" do
-      controller.stub(:controller_name).and_return('users')
-      controller.stub(:action_name).and_return('index')
+      allow(controller).to receive(:controller_name).and_return('users')
+      allow(controller).to receive(:action_name).and_return('index')
       expect(helper.current_header).to eq 'users'
     end
 
     it "該当しないコントローラ・アクションの場合はnilを返すこと" do
-      controller.stub(:controller_name).and_return('users')
-      controller.stub(:action_name).and_return('hoge')
+      allow(controller).to receive(:controller_name).and_return('users')
+      allow(controller).to receive(:action_name).and_return('hoge')
       expect(helper.current_header).to be_nil
     end
   end
