@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-#                         DELETE /questions/:question_id/answers(.:format)         answers#destroy
-
 describe AnswersController do
   login_user
 
