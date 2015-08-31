@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'tops#index'
 
   resources :questions, except: %i(destroy) do
-    resource :answers, except: %i(show new) do
+    resources :answers, except: %i(show new) do
       post :preview, on: :collection
     end
     resource :comments, only: %i(new create)
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     post :accept, on: :member
   end
 
-  resources :answers, only: [] do
+  resources :answers do
     resource :comments, only: %i(new create)
     resource :votes, only: %i(new create)
   end

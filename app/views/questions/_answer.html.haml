@@ -3,9 +3,9 @@
 .post-footer
   - if user_signed_in?
     .vt
-      = link_to '編集', edit_question_answers_path(question, answer)
+      = link_to '編集', edit_question_answer_path(question, answer)
       - if current_user == answer.answerer
-        = link_to '削除', question_answers_path(question, answer), :method => :delete,
+        = link_to '削除', question_answer_path(question, answer), :method => :delete,
                           :data => { :confirm => '回答を削除しますか?' }
   .post-signature
     .user-action-time
