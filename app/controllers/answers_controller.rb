@@ -31,9 +31,9 @@ class AnswersController < ApplicationController
   def destroy
     if @answer.answerer == current_user
       @answer.destroy
-      redirect_to question_url @answer.question, notice: '回答を削除しました。'
+      redirect_to question_url(@answer.question), notice: '回答を削除しました。'
     else
-      redirect_to question_url @answer.question, alert: '他の人の回答は削除できません。'
+      redirect_to question_url(@answer.question), alert: '他の人の回答は削除できません。'
     end
   end
 
