@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post :preview, on: :collection
     end
     resource :comments, only: %i(new create)
-    resource :votes, only: %i(new create)
+    resource :votes, only: %i(create)
 
     collection do
       get :search
@@ -17,9 +17,9 @@ Rails.application.routes.draw do
     post :accept, on: :member
   end
 
-  resources :answers do
+  resources :answers, only: [] do
     resource :comments, only: %i(new create)
-    resource :votes, only: %i(new create)
+    resource :votes, only: %i(create)
   end
 
   resources :tags, only: %i(index)
