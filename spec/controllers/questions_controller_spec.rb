@@ -1,16 +1,5 @@
 require 'rails_helper'
 
-# search_questions     GET    /questions/search(.:format)                       questions#search
-# unanswered_questions GET    /questions/unanswered(.:format)                   questions#unanswered
-# preview_questions    POST   /questions/preview(.:format)                      questions#preview
-# accept_question      POST   /questions/:id/accept(.:format)                   questions#accept
-# questions            GET    /questions(.:format)                              questions#index
-#                      POST   /questions(.:format)                              questions#create
-# new_question         GET    /questions/new(.:format)                          questions#new
-# edit_question        GET    /questions/:id/edit(.:format)                     questions#edit
-# question             GET    /questions/:id(.:format)                          questions#show
-#                      PATCH  /questions/:id(.:format)                          questions#update
-#                      PUT    /questions/:id(.:format)                          questions#update
 describe QuestionsController do
   describe '未ログインでのアクセス' do
     before do
@@ -22,6 +11,7 @@ describe QuestionsController do
         get :index
         expect(response).to render_template :index
       end
+
       it '質問内容を取得すること' do
         get :index
         expect(assigns(:questions)).to match_array([@question])
@@ -30,14 +20,15 @@ describe QuestionsController do
 
     describe 'GET #search' do
       it 'indexテンプレートを表示すること' do
-        create(:question, id: 2, title: 'rubyでバッチ処理を実行したい')
+        create(:question, title: 'rubyでバッチ処理を実行したい')
         get :search, keyword: 'ru'
         expect(response).to render_template :index
       end
+
       it '検索した質問内容を取得すること' do
-        ruby = create(:question, id: 2, title: 'rubyでスクレイピングがしたい')
-        rails = create(:question, id: 3, title: 'railsでバリデーションがうまくいきません')
-        create(:question, id: 4, title: 'nginxが不安定です')
+        ruby = create(:question, title: 'rubyでスクレイピングがしたい')
+        rails = create(:question, title: 'railsでバリデーションがうまくいきません')
+        create(:question, title: 'nginxが不安定です')
         get :search, keyword: 'r'
         expect(assigns(:questions)).to match_array([rails, ruby])
       end
@@ -48,18 +39,18 @@ describe QuestionsController do
         get :unanswered
         expect(response).to render_template :index
       end
+
       it '未回答の質問内容を取得すること' do
         # 質問
-        ruby = create(:question, id: 2, title: 'rubyでスクレイピングがしたい')
-        rails = create(:question, id: 3, title: 'railsでバリデーションがうまくいきません')
-        nginx = create(:question, id: 4, title: 'nginxが不安定です')
+        ruby = create(:question, title: 'rubyでスクレイピングがしたい')
+        rails = create(:question, title: 'railsでバリデーションがうまくいきません')
+        nginx = create(:question, title: 'nginxが不安定です')
         # 回答者
         dave = create(:user, id: 2, email: 'dave@pragmatic.com')
         dhh = create(:user, id: 3, email: 'david@basecamp.com')
         # 回答
         create(:answer, answerer: dave, question: ruby)
         create(:answer, answerer: dhh, question: rails)
-
         get :unanswered
         expect(assigns(:questions)).to match_array([nginx, @question])
       end
@@ -70,6 +61,7 @@ describe QuestionsController do
         get :show, id: @question
         expect(response).to render_template :show
       end
+
       it '指定された質問を取得すること' do
         get :show, id: @question
         expect(assigns(:question)).to eq @question
@@ -123,6 +115,7 @@ describe QuestionsController do
     login_user
 
     before do
+      @login_user = build(:user)
       @question = create(:question)
     end
 
@@ -141,47 +134,119 @@ describe QuestionsController do
     end
 
     describe 'POST #accept' do
-      #post :accept, id: @question, question: { best_answer_id: 1 }
       context '自分の質問で承認する' do
-        it '承認が可能なこと'
-        it '質問詳細画面にリダイレクトすること'
+        before do
+          @valid_question = create(:question, questioner: @login_user)
+          answerer = create(:user, id: 2, email: 'yui@example.com')
+          @answer = create(:answer, answerer: answerer, question: @valid_question)
+        end
+
+        it '承認が可能なこと' do
+          post :accept, id: @valid_question, question: { best_answer_id: @answer }
+          expect(flash[:notice]).to be_present
+        end
+
+        it '質問詳細画面にリダイレクトすること' do
+          post :accept, id: @valid_question, question: { best_answer_id: @answer }
+          expect(response).to redirect_to question_url(@valid_question)
+        end
       end
 
       context '他人の質問で承認する' do
-        it '承認ができないこと'
-        it '質問詳細画面にリダイレクトすること'
+        before do
+          other = create(:user, id: 2, email: 'akiko@example.com')
+          @invalid_question = create(:question, questioner: other)
+          answerer = create(:user, id: 3, email: 'yui@example.com')
+          @answer = create(:answer, answerer: answerer, question: @invalid_question)
+        end
+
+        it '承認ができないこと' do
+          post :accept, id: @invalid_question, question: { best_answer_id: @answer }
+          expect(flash[:alert]).to be_present
+        end
+
+        it '質問詳細画面にリダイレクトすること' do
+          post :accept, id: @invalid_question, question: { best_answer_id: @answer }
+          expect(response).to redirect_to question_url(@invalid_question)
+        end
       end
     end
 
     describe 'POST #preview' do
-      it '質問文をPOSTすると部分テンプレートを表示すること'
-      it 'POSTした質問の本文にビューからアクセスできること'
+      it '質問文をPOSTすると部分テンプレートを表示すること' do
+        post :preview, id: @question, body: 'たのしいRuby'
+        expect(response).to render_template(partial: '_preview')
+      end
+
+      it 'POSTした質問の本文にビューからアクセスできること' do
+        post :preview, id: @question, body: 'たのしいRuby'
+        expect(assigns(:body)).to eq 'たのしいRuby'
+      end
     end
 
     describe 'POST #create' do
       context '質問の登録に成功した場合' do
-        it 'データが登録されていること'
-        it '質問詳細ページにリダレクトされていること '
-        it '質問詳細ページに登録完了メッセージが表示されていること'
+        it 'データが登録されていること' do
+          expect {
+            post :create, question: attributes_for(:question)
+          }.to change(Question, :count).by(1)
+        end
+
+        it '質問詳細ページにリダレクトされていること ' do
+          post :create, question: attributes_for(:question)
+          expect(response).to redirect_to question_path(assigns[:question])
+        end
+
+        it '質問詳細ページに登録完了メッセージが表示されていること' do
+          post :create, question: attributes_for(:question)
+          expect(flash[:notice]).to be_present
+        end
       end
 
       context '質問の登録に失敗した場合' do
-        it 'データは登録されていないこと'
-        it '質問詳細画面が表示されていること'
+        it 'データは登録されていないこと' do
+          expect {
+            post :create, question: attributes_for(:question, title: 'エラータイトル')
+          }.to change(Question, :count).by(0)
+        end
+
+        it '質問登録画面が表示されていること' do
+          post :create, question: attributes_for(:question, title: 'エラータイトル')
+          expect(response).to render_template :new
+        end
       end
     end
 
     describe 'POST #update' do
-      #post :create, id: @question, question: attributes_for(:question)
       context '質問の更新に成功した場合' do
-        it 'データが更新されていること'
-        it '質問詳細ページにリダレクトされていること'
-        it '質問詳細ページ更新完了メッセージが表示されていること'
+        it 'データが更新されていること' do
+          patch :update, id: @question, question: attributes_for(:question, title: 'タイトル変更タイトル変更')
+          @question.reload
+          expect(@question.title).to eq('タイトル変更タイトル変更')
+        end
+
+        it '質問詳細ページにリダレクトされていること' do
+          patch :update, id: @question, question: attributes_for(:question, title: 'タイトル変更タイトル変更')
+          expect(response).to redirect_to question_path(@question)
+        end
+
+        it '質問詳細ページ更新完了メッセージが表示されていること' do
+          patch :update, id: @question, question: attributes_for(:question, title: 'タイトル変更タイトル変更')
+          expect(flash[:notice]).to be_present
+        end
       end
 
       context '質問の更新に失敗した場合' do
-        it 'データは更新されていないこと'
-        it '再度編集画面が表示されていること'
+        it 'データは更新されていないこと' do
+          patch :update, id: @question, question: attributes_for(:question, title: 'エラータイトル')
+          @question.reload
+          expect(@question.title).not_to eq('エラータイトル')
+        end
+
+        it '再度編集画面が表示されていること' do
+          patch :update, id: @question, question: attributes_for(:question, title: 'エラータイトル')
+          expect(response).to render_template :edit
+        end
       end
     end
   end
