@@ -2,6 +2,8 @@
 
 Ruby on Railsの学習の為に構築したStackoverflowクローン
 
+https://frozen-mountain-3746.herokuapp.com
+
 ## 機能一覧
 
 - 新規ユーザ登録
