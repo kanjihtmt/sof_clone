@@ -3,5 +3,5 @@
   #recent-tags-list
     - tags.each do |tag|
       %div
-        = link_to tag.title, '#', class: 'post-tag'
+        = link_to tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag'
         %span.item-multipler= "x #{tag.taggings_count}"

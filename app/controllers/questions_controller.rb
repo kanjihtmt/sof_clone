@@ -1,14 +1,23 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i(index unanswered show search)
   before_action :set_question, only: %i(show edit update accept)
-  before_action :set_tags, only: %i(index unanswered search)
+  before_action :set_tags, only: %i(index unanswered tagged search)
 
   def index
-    @questions = Question.page(params['page']).per(PAGE_MAX).includes(:questioner, :tags).sort(params[:tab])
+    @questions = Question.page(params['page']).per(PAGE_MAX)
+                  .includes(:questioner, :tags).sort(params[:tab])
   end
 
   def unanswered
-    @questions = Question.page(params['page']).per(PAGE_MAX).includes(:questioner, :tags).sort('unanswered')
+    @questions = Question.page(params['page']).per(PAGE_MAX)
+                  .includes(:questioner, :tags).sort('unanswered')
+    render :index
+  end
+
+  def tagged
+    @questions = Question.page(params['page']).per(PAGE_MAX)
+                  .includes(:questioner, :tags).joins(:tags)
+                  .where('tags.title = ?', params[:tag]).order(created_at: :desc)
     render :index
   end
 

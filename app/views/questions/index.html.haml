@@ -32,8 +32,8 @@
               = strip_tags(markdown(question.body)).truncate(200)
             .vt
               .tags
-                - question.tags.each do |tag|
-                  = link_to(tag.title, '#', class: 'post-tag', title: tag.title, rel: 'tag')
+                - question.tags.uniq.each do |tag|
+                  = link_to(tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag')
             .post-signature
               .user-action-time
                 質問日時

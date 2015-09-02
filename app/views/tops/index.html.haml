@@ -31,7 +31,7 @@
               = link_to question.title, question_path(question), {class: 'question-hyperlink'}
             .tags
               - question.tags.each do |tag|
-                = link_to(tag.title, '#', class: 'post-tag', title: tag.title, rel: 'tag')
+                = link_to(tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag')
             .started
               = link_to(question_path(question), class: 'started-link') do
                 更新日時:

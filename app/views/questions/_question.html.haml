@@ -2,7 +2,7 @@
   = raw(markdown(question.body))
   .post-taglist
     - question.tags.each do |tag|
-      = link_to tag.title, '#', class: 'post-tag'
+      = link_to tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag'
   .post-footer
     .vt
       - if user_signed_in?
