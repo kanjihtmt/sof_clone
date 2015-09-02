@@ -41,8 +41,11 @@ $ ->
       comment = "<p>#{data.body} - #{data.commenter} #{data.created_at}"
       $button.parents('.comments').find('.comment').prepend(comment)
       $('.textarea').val('')
+      $form.find('.comment_body').removeClass('has-error')
     .fail (data) ->
       messages = ''
       data.responseJSON.messages.forEach (message, i) ->
         messages = messages + '・&nbsp;' + message + '<br>'
       $('.flash-message').html(flashMessage('warning', messages))
+      $form.find('.comment_body').addClass('has-error')
+      $('html,body').animate({scrollTop: 0}, 'fast')
