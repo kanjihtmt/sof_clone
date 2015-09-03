@@ -2,13 +2,13 @@
   #mainbar.col-md-10
     %ul.nav.nav-tabs{role: 'tablist'}
       %li{class: params[:tab].nil? || params[:tab] == 'active' ? 'active' : ''}
-        = link_to 'アクティブ', root_path(tab: 'active')
+        = link_to 'アクティブ', root_path(tab: 'active'), title: '最近投稿された、または更新された質問'
       %li{class: params[:tab] == 'hot' ? 'active' : ''}
-        = link_to '人気', root_path(tab: 'hot')
+        = link_to '人気', root_path(tab: 'hot'), title: '過去2日間の回答数が最多の質問'
       %li{class: params[:tab] == 'week' ? 'active' : ''}
-        = link_to '今週', root_path(tab: 'week')
+        = link_to '今週', root_path(tab: 'week'), title: '今週の回答数が最多の質問'
       %li{class: params[:tab] == 'month' ? 'active' : ''}
-        = link_to '今月', root_path(tab: 'month')
+        = link_to '今月', root_path(tab: 'month'), title: '今月の回答数が最多の質問'
 
     .question-list
       - @questions.each do |question|
@@ -31,9 +31,9 @@
               = link_to question.title, question_path(question), {class: 'question-hyperlink'}
             .tags
               - question.tags.each do |tag|
-                = link_to(tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag')
+                = link_to tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag'
             .started
-              = link_to(question_path(question), class: 'started-link') do
+              = link_to question_path(question), class: 'started-link' do
                 更新日時:
                 %span{title: question.updated_at, class:'relativetime'}= "#{time_ago_in_words question.updated_at}前"
               %a{href:'#'}= question.questioner.try(:name)

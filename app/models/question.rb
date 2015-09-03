@@ -4,18 +4,21 @@ class Question < ActiveRecord::Base
   scope :sort, ->(sort_type) do
     case (sort_type)
       when 'active'
-        order(updated_at: :desc, created_at: :desc)
+        order(created_at: :desc, updated_at: :desc)
       when 'newest'
         order(created_at: :desc)
       when 'hot'
-        where(updated_at: (Time.now - 2.day).at_beginning_of_day .. Time.now).order(answers_count: :desc)
+        from, to = (Time.now - 2.day).at_beginning_of_day, Time.now
+        where(updated_at: from..to).order(answers_count: :desc)
       when 'week'
-        where(updated_at: (Time.now - 6.day).at_beginning_of_day .. Time.now).order(answers_count: :desc)
+        from, to = (Time.now - 6.day).at_beginning_of_day, Time.now
+        where(updated_at: from..to).order(answers_count: :desc, created_at: :desc)
       when 'month'
-        where(updated_at: (Time.now - 1.month).at_beginning_of_day .. Time.now).order(answers_count: :desc)
+        from, to = Time.now.at_beginning_of_month, Time.now
+        where(updated_at: from..to).order(answers_count: :desc, created_at: :desc)
       when 'unanswered'
-        #includes(:answers).where(answers: { question_id: nil }).order(created_at: :desc)
-        where('id NOT IN (SELECT DISTINCT(question_id) FROM answers)').order(created_at: :desc)
+        where('id NOT IN (SELECT DISTINCT(question_id) FROM answers)')
+          .order(answers_count: :desc, created_at: :desc)
     end
   end
 
