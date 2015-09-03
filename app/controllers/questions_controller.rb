@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i(index unanswered show search)
   before_action :set_question, only: %i(show edit update accept)
   before_action :set_tags, only: %i(index unanswered tagged search)
+  before_action :set_default_sort, only: %i(index)
 
   def index
     @questions = Question.page(params['page']).per(PAGE_MAX)
@@ -81,5 +82,9 @@ class QuestionsController < ApplicationController
 
     def question_params
       params.require(:question).permit(:title, :body, :tag_list, :questioner_id, :best_answer_id)
+    end
+
+    def set_default_sort
+      params[:tab] ||= 'active'
     end
 end

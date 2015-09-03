@@ -3,8 +3,6 @@ class Question < ActiveRecord::Base
 
   scope :sort, ->(sort_type) do
     case (sort_type)
-      when 'active'
-        order(created_at: :desc, updated_at: :desc)
       when 'newest'
         order(created_at: :desc)
       when 'hot'
@@ -16,6 +14,8 @@ class Question < ActiveRecord::Base
       when 'month'
         from, to = Time.now.at_beginning_of_month, Time.now
         where(updated_at: from..to).order(answers_count: :desc, created_at: :desc)
+      else
+        order(created_at: :desc, updated_at: :desc)
     end
   end
 
