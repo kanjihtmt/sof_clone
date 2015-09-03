@@ -8,6 +8,7 @@ ACTIVE_HEADER_LINKS = {
     index: 'questions',
     show: 'questions',
     search: 'questions',
+    tagged: 'questions',
     unanswered: 'unanswered'
   },
   users: {
