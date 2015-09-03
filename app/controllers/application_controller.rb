@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
     def set_tags
       @tags = Tag.order(updated_at: :desc)
     end
+
+    def set_default_sort
+      params[:tab] ||= 'active'
+    end
 end

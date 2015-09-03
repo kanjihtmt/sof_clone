@@ -83,8 +83,4 @@ class QuestionsController < ApplicationController
     def question_params
       params.require(:question).permit(:title, :body, :tag_list, :questioner_id, :best_answer_id)
     end
-
-    def set_default_sort
-      params[:tab] ||= 'active'
-    end
 end
