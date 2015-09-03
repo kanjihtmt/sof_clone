@@ -9,8 +9,7 @@ class QuestionsController < ApplicationController
   end
 
   def unanswered
-    @questions = Question.page(params['page']).per(PAGE_MAX)
-                  .includes(:questioner, :tags).sort('unanswered')
+    @questions = Question.unanswered(params['page'])
     render :index
   end
 

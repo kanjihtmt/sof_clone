@@ -1,0 +1,34 @@
+.questions
+  - @questions.each do |question|
+    .question-summary.narrow
+      .cp
+        .votes
+          .mini-counts
+            %span{title: "#{question.total_votes_count} 票"}= question.total_votes_count
+          %div 票
+        .status{class: status(question)}
+          .mini-counts
+            %span{title: "#{question.answers_count} 件の回答"}= question.answers_count
+          %div 回答
+        .views
+          %span{title: "#{question.impressionist_count} 件の閲覧数"}= question.impressionist_count
+          件の閲覧数
+      .summary
+        %h3
+          = link_to question.title, question_path(question), {class: 'question-hyperlink'}
+        .excerpt
+          = strip_tags(markdown(question.body)).truncate(200)
+        .vt
+          .tags
+            - question.tags.uniq.each do |tag|
+              = link_to(tag.title, tagged_questions_path(tag: tag.title), class: 'post-tag', title: tag.title, rel: 'tag')
+        .post-signature
+          .user-action-time
+            質問日時
+            %span=  question.created_at.strftime("%m月%d日 %H:%M")
+          .gravatar-wrapper-32
+            = image_tag question.questioner.try(:gravatar_url, size: 32), width: 32, height: 32
+          .user-detail
+            = question.questioner.try(:name)
+
+  = paginate(@questions)

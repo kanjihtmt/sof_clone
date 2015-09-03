@@ -16,9 +16,6 @@ class Question < ActiveRecord::Base
       when 'month'
         from, to = Time.now.at_beginning_of_month, Time.now
         where(updated_at: from..to).order(answers_count: :desc, created_at: :desc)
-      when 'unanswered'
-        where('id NOT IN (SELECT DISTINCT(question_id) FROM answers)')
-          .order(answers_count: :desc, created_at: :desc)
     end
   end
 
@@ -50,4 +47,11 @@ class Question < ActiveRecord::Base
   end
 
   is_impressionable
+
+  def self.unanswered(per_page)
+    Question.page(per_page).per(PAGE_MAX)
+      .includes(:questioner, :tags)
+      .where('id NOT IN (SELECT DISTINCT(question_id) FROM answers)')
+      .order(answers_count: :desc, created_at: :desc)
+  end
 end
