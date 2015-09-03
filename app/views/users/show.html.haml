@@ -1,5 +1,8 @@
 %h2 プロフィール
-
-%p= @user.name
-%p= @user.location
-%p= @user.about_me
+.row
+  .col-md-3
+    = image_tag(@user.try(:gravatar_url, size: 164), width: 164, height: 164)
+  .col-md-9
+    %p= @user.name
+    %p= @user.location
+    %p= @user.about_me

@@ -3,8 +3,8 @@
     - @users.each do |user|
       .col-md-3.col-xs-6
         .avatar
-          = link_to image_tag(user.try(:gravatar_url, size: 48), width: 48, height: 48, alt: user.name, title: user.name),
-              user_path(user)
+          = link_to image_tag(user.try(:gravatar_url, size: 48), width: 48, height: 48,
+              alt: user.name, title: user.name), user_path(user)
         .user-detail
           = link_to user.name, user_path(user)
           %br
