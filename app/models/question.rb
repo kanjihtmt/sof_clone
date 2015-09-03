@@ -46,8 +46,8 @@ class Question < ActiveRecord::Base
 
   is_impressionable
 
-  def self.unanswered(per_page)
-    Question.page(per_page).per(PAGE_MAX)
+  def self.unanswered(page)
+    Question.page(page).per(PAGE_MAX)
       .includes(:questioner, :tags)
       .where('id NOT IN (SELECT DISTINCT(question_id) FROM answers)')
       .order(answers_count: :desc, created_at: :desc)
