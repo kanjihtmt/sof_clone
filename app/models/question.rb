@@ -3,8 +3,6 @@ class Question < ActiveRecord::Base
 
   scope :sort, ->(sort_type) do
     case (sort_type)
-      when 'newest'
-        order(created_at: :desc)
       when 'hot'
         from, to = (Time.now - 2.day).at_beginning_of_day, Time.now
         where(updated_at: from..to).order(answers_count: :desc)
