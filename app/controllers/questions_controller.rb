@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.page(params['page']).per(PAGE_MAX)
-                  .includes(:questioner, :tags).sort(params[:tab])
+                  .includes(:questioner, :tags).interval(params[:tab]).sort(params[:tab])
   end
 
   def unanswered

@@ -1,19 +1,26 @@
 class Question < ActiveRecord::Base
   include Votable
 
-  scope :sort, ->(sort_type) do
-    case (sort_type)
-      when 'hot'
-        from, to = (Time.now - 2.day).at_beginning_of_day, Time.now
-        where(updated_at: from..to).order(answers_count: :desc)
-      when 'week'
-        from, to = (Time.now - 6.day).at_beginning_of_day, Time.now
-        where(updated_at: from..to).order(answers_count: :desc, created_at: :desc)
-      when 'month'
-        from, to = Time.now.at_beginning_of_month, Time.now
-        where(updated_at: from..to).order(answers_count: :desc, created_at: :desc)
+  scope :sort, ->(type) do
+    case (type)
+      when 'hot', 'week', 'month'
+        order(answers_count: :desc, updated_at: :desc)
       else
         order(created_at: :desc, updated_at: :desc)
+    end
+  end
+
+  scope :interval, -> (type) do
+    case (type)
+      when 'hot'
+        from, to = (Time.now - 2.day).at_beginning_of_day, Time.now
+        where(updated_at: from..to)
+      when 'week'
+        from, to = (Time.now - 6.day).at_beginning_of_day, Time.now
+        where(updated_at: from..to)
+      when 'month'
+        from, to = Time.now.at_beginning_of_month, Time.now
+        where(updated_at: from..to)
     end
   end
 
