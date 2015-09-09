@@ -20,5 +20,6 @@
     - answer.comments.each do |comment|
       %p= "#{comment.body} – #{comment.commenter.try(:name)} #{time_ago_in_words comment.created_at}前"
   .comment-link
+    -# SonicGardenでは js で利用するclass名は js-add-comment みたいにして、CSS用のクラスと区別してます。
     %a.add-comment{href: '#', 'data-add-comment-path': new_answer_comments_path(answer)} コメントを追加
     .comment-form
