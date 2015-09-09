@@ -27,5 +27,10 @@ class CommentsController < ApplicationController
     def set_commentable
       klass, id = request.path.split('/')[1, 2]
       @commentable = klass.singularize.classify.constantize.find(id)
+      # これは趣味レベルの話になってきますが私だったら次のように実装してみました
+      # comment model に COMMENTABLE_CLASSES = [Question, Answer].freeze を追加して
+      # klass = Comment::COMMENTABLE_CLASSES.detect{ |c| params["#{c.name.underscore}_id"] }
+      # @commentable = klass.find(params["#{klass.name.underscore}_id"])
+      # paramsが設定されていたので、せっかくなので使ってみました。
     end
 end
