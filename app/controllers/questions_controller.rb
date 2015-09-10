@@ -21,6 +21,9 @@ class QuestionsController < ApplicationController
     render :index
   end
 
+  # このままでも、一つ一つのアクションが行数が少なくスッキリしているんですが、
+  # index で params[:keyword] が存在した時にはsearchするようにすると、アクション数を減らせていいかも
+  # さすがに tagged までindexにするのはちょっと大袈裟かもしれませんが。
   def search
     @questions = Question.search(title_or_body_cont: params[:keyword]).result
                     .page(params['page']).per(PAGE_MAX).includes(:questioner, :tags)
