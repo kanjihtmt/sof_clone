@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def index
     @users = User.search(name_cont: params[:keyword]).result
     render partial: 'users' if request.xhr?
+    # 1行でおさまっているので、見た目はいいんですが、respond_to で js or html かで分けたほうがRailsの書き方っぽいので好きです。
   end
 
   def show
