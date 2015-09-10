@@ -1,14 +1,15 @@
 class Question < ActiveRecord::Base
   include Votable
 
-  # コード量は増えてしまうのですが同じ文字列を複数の場所で使う場合には
+  # コード量は増えてしまうのですが同じ文字列を複数の場所で使う場合に
   # HOT_RANGE = 'hot'.freeze
   # WEEK_RANGE = 'week'.freeze
   # MONTH_RANGE = 'month'.freeze
-  # と定義して下のscopeのcase部分で when HOT_RANGE みたいにして、typoした場合にはエラーが発生するようにします
+  # と定義して下のscopeのcase部分で when HOT_RANGE みたいにして、typoした場合にはエラーが発生するようにしとくとバグが減ってきます
   # questions/index.html.haml の所でも 'hot' の所を Question::HOT_RANGE みたいにして、typoを防ぎます
   # scope :sort の所では TIME_RANGES = [HOT_RANGE, WEEK_RANGE, MONTH_RANGE].freeze
-  # を定義しておいて when TIME_RANGES.include?(type) と書きます。(少し見た目がゴツくなりますが。。。)
+  # を定義しておいて when TIME_RANGES.include?(type) とすると、同じようなロジックを使うときや、種類を増やすときも楽だなと思いました。
+  # (少し見た目がゴツくなりますが。。。)
 
   scope :sort, ->(type) do
     case (type)
